@@ -5,7 +5,7 @@ Vue.use(Router)
 
 function importRoutes(r) {
   let routes = r.keys().map(key => r(key).default);
-  console.log(r,routes)
+  // console.log(r,routes)
   return _.flatten(routes);
 }
 

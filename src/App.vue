@@ -5,18 +5,16 @@
             <div class="l-header">
                 <h1 @click="home" class="logo">利晨体育</h1>
                 <Breadcrumb separator=">">
-                    <BreadcrumbItem to="/">Home</BreadcrumbItem>
-                    <BreadcrumbItem to="/components/breadcrumb">Components</BreadcrumbItem>
+                    <BreadcrumbItem>当前位置</BreadcrumbItem>
                     <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
                 </Breadcrumb>
             </div>
             <!--            <Crumbs :step="getCrumbs" :style="{ paddingLeft:menuToggle }"></Crumbs>-->
             <div class="l-sider" :style="{ width:menuToggle }">
                 <Menu :style="{ width:menuToggle }">
-                    <MenuItem name="1">订单管理</MenuItem>
-                    <MenuItem name="2">收入支出统计</MenuItem>
-                    <MenuItem name="3">员工管理</MenuItem>
-                    <MenuItem name="4">课程安排</MenuItem>
+                    <MenuItem v-for="(item,index) in menu" :key="index" name="item.menuCode" @on-select="selectItem">
+                        {{item.menuName}}
+                    </MenuItem>
                 </Menu>
                 <!--<Sider :width="200" ref="side" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
                     <div class="u-toggle">
@@ -61,7 +59,25 @@
         },
         data() {
             return {
-                isCollapsed: false
+                isCollapsed: false,
+                menu: [
+                    {
+                        menuCode: "1",
+                        menuName: '订单管理'
+                    },
+                    {
+                        menuCode: "2",
+                        menuName: '收入支出统计'
+                    },
+                    {
+                        menuCode: "3",
+                        menuName: '员工管理'
+                    },
+                    {
+                        menuCode: "4",
+                        menuName: '课程安排'
+                    }
+                ]
             }
         },
         computed: {
@@ -109,15 +125,12 @@
             //
             // },
             // //点击三级菜单
-            // selectItem(data) {
-            //   this.changeItem(data);
-            //   this.$router.push({
-            //     name:data
-            //   });
-            //   this.$nextTick(()=> {
-            //     this.$refs.menu.updateActiveName();
-            //   });
-            // },
+            selectItem(data) {
+              // this.changeItem(data);
+              this.$router.push({
+                name:data
+              })
+            },
             // //首页
             // home(){
             //   this.reset();
@@ -142,10 +155,16 @@
         background-color: rgba(68, 97, 125, 1);
         line-height: 60px;
         color: #fff;
-        .ivu-breadcrumb a{
+
+        .ivu-breadcrumb {
             color: #fff;
         }
-        .ivu-breadcrumb>span:last-child {
+
+        .ivu-breadcrumb a {
+            color: #fff;
+        }
+
+        .ivu-breadcrumb > span:last-child {
             color: #fff;
         }
     }
