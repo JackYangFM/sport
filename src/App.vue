@@ -9,97 +9,50 @@
                     <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
                 </Breadcrumb>
             </div>
-            <!--            <Crumbs :step="getCrumbs" :style="{ paddingLeft:menuToggle }"></Crumbs>-->
             <div class="l-sider" :style="{ width:menuToggle }">
-                <Menu :style="{ width:menuToggle }">
-                    <MenuItem v-for="(item,index) in menu" :key="index" name="item.menuCode" @on-select="selectItem">
+                <Menu :style="{ width:menuToggle }" active-name="1">
+                    <MenuItem v-for="(item,index) in menu" :key="index" :name="item.menuCode" :to="item.menuPath">
                         {{item.menuName}}
                     </MenuItem>
                 </Menu>
-                <!--<Sider :width="200" ref="side" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
-                    <div class="u-toggle">
-                        <Icon :class="rotateIcon" @click.native="collapsedSider" type="navicon-round" :size="20"></Icon>
-                    </div>
-                    &lt;!&ndash;<Menu
-                            :accordion="true"
-                            :open-names="[getOpenName]"
-                            :active-name="getActiveName"
-                            :class="menuitemClasses"
-                            ref="sub" theme="light" width="auto" @on-select="selectItem">
-                        <Submenu v-for="sub in getSubMenu" :name="sub.menuCode" :key="sub.menuCode">
-                            <template slot="title">
-                                <span v-if="!isCollapsed">{{ sub.menuName }}</span>
-                            </template>
-                            <div v-if="!isCollapsed">
-                                <MenuItem v-for="item in sub.subMenus" :name="item.menuCode" :key="item.menuCode">
-                                    {{ item.menuName }}
-                                </MenuItem>
-                            </div>
-                        </Submenu>
-                    </Menu>&ndash;&gt;
-                </Sider>-->
             </div>
             <div class="l-content" :style="{ left:menuToggle }">
                 <router-view/>
             </div>
         </div>
-        <!--    <router-view v-else/>-->
 
     </div>
 </template>
 <script>
-    // import { mapGetters,mapActions } from 'vuex'
-    import Crumbs from '@/components/index/crumbs'
-    import Operate from '@/components/index/operate'
-
     export default {
-        components: {
-            Crumbs,
-            Operate
-        },
         data() {
             return {
                 isCollapsed: false,
                 menu: [
                     {
                         menuCode: "1",
-                        menuName: '订单管理'
+                        menuName: '订单管理',
+                        menuPath: 'orderManage'
                     },
                     {
                         menuCode: "2",
-                        menuName: '收入支出统计'
+                        menuName: '收入支出统计',
+                        menuPath: 'incomePayManage'
                     },
                     {
                         menuCode: "3",
-                        menuName: '员工管理'
+                        menuName: '员工管理',
+                        menuPath: 'staffManage'
                     },
                     {
                         menuCode: "4",
-                        menuName: '课程安排'
+                        menuName: '课程安排',
+                        menuPath: 'courseArrangement'
                     }
                 ]
             }
         },
         computed: {
-            //   ...mapGetters([
-            //     'getMenu',
-            //     'getSubMenu',
-            //     'getCrumbs',
-            //     'getOpenName',
-            //     'getActiveName',
-            //     'getActiveNav'
-            //   ]),
-            //   rotateIcon () {
-            //     return [
-            //       this.isCollapsed ? 'rotate-icon' : ''
-            //     ];
-            //   },
-            //   menuitemClasses () {
-            //     return [
-            //       'menu-item',
-            //       this.isCollapsed ? 'collapsed-menu' : ''
-            //     ]
-            //   },
             menuToggle() {
                 return this.isCollapsed ? '78px' : '200px';
             }
@@ -109,44 +62,15 @@
                 this.reset();
                 location.href = '/';
             },
-            // ...mapActions([
-            //   'initMenu',
-            //   'changeSubMenu',
-            //   'changeItem',
-            //   'reset'
-            // ]),
-            // //点击一级菜单
-            // selection(data) {
-            //   this.changeSubMenu(data);
-            //   this.$nextTick(()=> {
-            //     this.$refs.sub.updateOpened();
-            //     this.$refs.sub.updateActiveName();
-            //   });
-            //
-            // },
-            // //点击三级菜单
+            //点击三级菜单
             selectItem(data) {
-              // this.changeItem(data);
-              this.$router.push({
-                name:data
-              })
+                this.$router.push({
+                    name: data
+                })
             },
-            // //首页
-            // home(){
-            //   this.reset();
-            //   location.href = '/';
-            // },
-            // //收起菜单
-            // collapsedSider () {
-            //   this.$refs.side.toggleCollapse();
-            //   this.$nextTick(()=> {
-            //     this.$refs.sub.updateActiveName();
-            //   });
-            // }
         },
         created() {
-            // this.initMenu(this);
-            // console.log(this.$route)
+
         }
     }
 </script>

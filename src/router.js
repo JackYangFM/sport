@@ -19,7 +19,7 @@ export default new Router({
         redirect: '/',
       },{
         path: '/',
-        redirect: '/home'
+        redirect: '/orderManage'
       }],
     ...children
   ]

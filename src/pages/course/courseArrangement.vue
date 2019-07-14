@@ -1,6 +1,6 @@
 <template>
     <div >
-            course
+            课程安排
     </div>
 
 </template>
@@ -11,12 +11,12 @@
     }
 </script>
 
-<style lang="less" scoped>
-    .l-demo{
+<style lang="less">
+   /* .l-demo{
         margin: 10px;
     // 隐藏当前页分页
        .ivu-page{
            display: none
        }
-    }
+    }*/
 </style>
