@@ -19,15 +19,23 @@
             <div class="l-content" :style="{ left:menuToggle }">
                 <router-view/>
             </div>
+            <Select  :class="[ campus == true ? 'hide' : '' ]" @on-change="changetenement" size="small" placeholder="请选择校区" v-model="campusList.campus_id" >
+                <Option v-for="(item,index) in campusList" :key="item.campus_id + index" :value="item.campus_id">{{item.campus_name}}</Option>
+            </Select>
         </div>
 
     </div>
 </template>
 <script>
+    import {campusSelect} from "@/service/api"
+
     export default {
         data() {
             return {
                 isCollapsed: false,
+                campus:false,
+                isRouterAlive:true,
+                campusList:[],
                 menu: [
                     {
                         menuCode: "1",
@@ -68,9 +76,34 @@
                     name: data
                 })
             },
+            changetenement(obj){
+                updateHirer({campus_id:obj})
+                    .then(res => {
+                        this.$Notice.success({title:'更新校区成功!'})
+                        // location.reload()
+                        /*this.isRouterAlive = false
+                        this.$nextTick(function () {
+                            this.isRouterAlive = true
+                        })*/
+                    })
+                    .catch(err => {
+                        this.$Message.error(err);
+                    })
+            },
+            permission(){
+                campusSelect()
+                    .then(res => {
+                        this.campusList = res
+                        this.campusList.campus_id = this.campusList.campus_id ? this.campusList.campus_id : res[0].campus_id
+                        // updateHirer({campus_id:this.campusList.campus_id})
+                    })
+                    .catch(err => {
+                        this.$Message.error(err);
+                    })
+            },
         },
         created() {
-
+            this.permission()
         }
     }
 </script>
@@ -97,5 +130,16 @@
         width: 220px;
         text-align: center;
         float: left;
+    }
+
+    .l-app{
+        .ivu-select{
+            position: relative;
+            top: 20px;
+            right: 30px;
+            float: right;
+            z-index: 999;
+            width: 200px;
+        }
     }
 </style>

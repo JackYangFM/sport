@@ -94,3 +94,14 @@ export async function queryPerms(params) {
     }
   });
 }
+
+//获取校区数据
+export async function campusSelect(params,mock) {
+  return request('commonality_manage/campus_select',{
+    mock:mock ? mock : false,
+    body:{
+      method:'GET',
+      data:params
+    }
+  });
+}
