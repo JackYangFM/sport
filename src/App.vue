@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-view v-if="$route.path == '/parent'"/>
+        <router-view v-if="$route.path == '/parent'|| 'login'"/>
         <div class="l-app" v-else>
             <div class="l-header">
                 <h1 @click="home" class="logo">利晨体育</h1>
