@@ -7,8 +7,8 @@
       <img class="lc-logo" src="../../assets/images/logo.png" width="240">
       <div class="lc-input">
         <Form ref="formInline" :model="formInline" :rules="ruleInline">
-          <FormItem prop="user">
-            <Input type="text" v-model="formInline.user" placeholder="Username">
+          <FormItem prop="user_name">
+            <Input type="text" v-model="formInline.user_name" placeholder="Username">
               <Icon type="ios-person-outline" slot="prepend"></Icon>
             </Input>
           </FormItem>
@@ -29,10 +29,12 @@
   </div>
 </template>
 <script>
+  import {login} from "@/service/api"
+  
   export default {
     data() {
       let userNamePattern = /^[a-zA-Z]+$/;
-      const user = (rule, value, callback) => {
+      const user_name = (rule, value, callback) => {
         if (!value) {
           callback(new Error('请输入用户名'));
         } else if (!userNamePattern.test(value)) {
@@ -44,12 +46,12 @@
       
       return {
         formInline: {
-          user: '',
+          user_name: '',
           password: ''
         },
         ruleInline: {
-          user: [
-            {required: true, validator: user, trigger: 'blur'}
+          user_name: [
+            {required: true, validator: user_name, trigger: 'blur'}
           ],
           password: [
             {required: true, message: 'Please fill in the password.', trigger: 'blur'},
@@ -69,20 +71,21 @@
       },
       handleSubmit(name, formName) {
         this.$refs[name].validate((valid) => {
-          console.log(this.$refs[name])
           if (valid) {
             //判断复选框是否被勾选 勾选则调用配置cookie方法
             if (this.checked === true) {
-              console.log("checked == true");
               //传入账号名，密码，和保存天数3个参数
-              this.setCookie(this.formInline.user, this.formInline.password, 7);
+              this.setCookie(this.formInline.user_name, this.formInline.password, 7);
             } else {
-              console.log("清空Cookie");
               //清空Cookie
               this.clearCookie();
             }
-            console.log("登陆成功");
-            this.$Message.success('Success!');
+            // console.log("登陆成功");
+            login(this.formInline).then((res)=>{
+              this.$router.push({
+                name: 'courseArrangementPlan',
+              });
+            })
           } else {
             this.$Message.error('Fail!');
           }
@@ -104,7 +107,7 @@
             var arr2 = arr[i].split('='); //再次切割
             //判断查找相对应的值
             if (arr2[0] == 'userName') {
-              this.formInline.user = arr2[1]; //保存到保存数据的地方
+              this.formInline.user_name = arr2[1]; //保存到保存数据的地方
             } else if (arr2[0] == 'userPwd') {
               this.formInline.password = arr2[1];
             }

@@ -105,3 +105,13 @@ export async function campusSelect(params,mock) {
     }
   });
 }
+
+//登录
+export async function login(params,mock) {
+  return request('user_manage/login',{
+    mock:mock ? mock : false,
+    body:{
+      data:params
+    }
+  });
+}

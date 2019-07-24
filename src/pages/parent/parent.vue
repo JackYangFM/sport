@@ -46,7 +46,7 @@
                 </i-col>
                 <i-col :xs="24" :lg="12">
                     <div class="pccc-right">
-                        <i-form v-ref:form-validate :model="formValidate" :rules="ruleValidate" :label-width="80">
+                        <i-form :model="formValidate" :rules="ruleValidate" :label-width="80">
                         <Form-item label="姓名" prop="name">
                             <i-input :value.sync="formValidate.name" placeholder="请输入姓名"></i-input>
                         </Form-item>
@@ -59,7 +59,7 @@
                         </Form-item>
                         <Form-item>
                             <i-button type="primary" @click="handleSubmit('formValidate')">提交</i-button>
-                            <i-button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</i-button>
+                            <i-button type="primary" @click="handleReset('formValidate')" style="margin-left: 8px">重置</i-button>
                         </Form-item>
                         </i-form>
                     </div>

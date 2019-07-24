@@ -43,6 +43,10 @@ axios.interceptors.response.use(function (res) {
   let data = res.data;
   return new Promise((resolve) => {
     if (data.code === '0'||data.code === 0) {
+      if(data.message){
+        // 为null
+        Notice.success({title:data.message ? data.message :' '});
+      }
       resolve(data.data);
     }else{
       Notice.error({
