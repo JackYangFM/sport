@@ -3,13 +3,16 @@
     <Tips title="课程管理"></Tips>
     <div class="c-form f-single">
       <Form class="base-form" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100"
-            style="width: 500px">
+            style="width: 550px">
         <FormItem label="开课时间：" prop="time_quantum">
-          <TimePicker v-for="(item,index) in formValidate.make_an_appointment" :key="index" :value="item.time1"
-                      format="HH:mm" type="timerange" placement="bottom-end"
-                      :steps="[1, 30]"
-                      placeholder="Select time" style="width: 170px;margin: 0 30px 10px 0;"></TimePicker>
-          <Button type="dashed" long @click="handleAdd" icon="md-add" style="width: 370px;">增加一项</Button>
+          <span v-for="(item,index) in formValidate.make_an_appointment" :key="index" >
+            {{item.order}}：
+            <TimePicker :value="item.time_quantum"
+            format="HH:mm" type="timerange" placement="bottom-end"
+            :steps="[1, 30]"
+            placeholder="Select time" style="width: 170px;margin: 0 30px 10px 0;"></TimePicker>
+          </span>
+
         </FormItem>
         <FormItem label="集合地点：" prop="site">
           <Input clearable v-model="formValidate.site" placeholder="请输入集合地点"/>
@@ -55,6 +58,9 @@
           make_an_appointment: [],
         },
         ruleValidate: {
+          time_quantum:[
+            {required: true, message: '请选择开课时间', trigger: 'blur'}
+          ],
           site: [
             {required: true, message: '请输入集合地点', trigger: 'blur'}
           ],
@@ -72,16 +78,10 @@
       }
     },
     methods: {
-      handleAdd() {
-        this.index++;
-        this.formValidate.make_an_appointment.push({
-          order: '',
-          time_quantum: '',
-          index: this.index
-        });
-      },
       handleSubmit() {
-      
+        this.$refs['formValidate'].validate((valid) => {
+
+        })
       }
     },
     created() {

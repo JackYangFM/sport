@@ -12,6 +12,7 @@ function importRoutes(r) {
 const children = importRoutes(require.context('./', true, /^\.\/pages\/((?!\/)[\s\S])+\/route\.js$/));
 
 export default new Router({
+  mode:'hash',
   routes: [
     ...[
       {

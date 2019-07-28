@@ -8,12 +8,12 @@
       <div class="lc-input">
         <Form ref="formInline" :model="formInline" :rules="ruleInline">
           <FormItem prop="user_name">
-            <Input type="text" v-model="formInline.user_name" placeholder="Username">
+            <Input type="text" v-model="formInline.user_name" placeholder="请输入用户名">
               <Icon type="ios-person-outline" slot="prepend"></Icon>
             </Input>
           </FormItem>
           <FormItem prop="password">
-            <Input type="password" v-model="formInline.password" placeholder="Password">
+            <Input type="password" v-model="formInline.password" placeholder="请输入密码">
               <Icon type="ios-lock-outline" slot="prepend"></Icon>
             </Input>
           </FormItem>

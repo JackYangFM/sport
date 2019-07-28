@@ -9,7 +9,7 @@
       <h3 style="margin: 10px 15px;">{{parseTime(new Date().getTime(), '{y}年{m}月{d}日')}}课程信息：</h3>
       <Form ref="query" :model="formInline" inline label-position="right" :label-width="150">
         <FormItem label="开课时间：" prop="course_content">
-          <p v-for="(item,index) of  formInline.make_an_appointment" :key="index">{{item.time_quantum}}</p>
+          <p v-for="(item,index) of  formInline.rows" :key="index">{{item.time_quantum}}</p>
         </FormItem>
         <FormItem label="所需器材：" prop="course_time">
           <p>{{formInline.sports_equipment}} </p>
@@ -34,7 +34,7 @@
   import Tips from '../../components/tips'
   import BaseTable from '../../components/baseTable'
   import {parseTime} from '../../utils/index'
-  import {compileInit} from "@/service/courseArrangement"
+  import {compileInit,select} from "@/service/courseArrangement"
   
   export default {
     name: "CourseArrangement",
@@ -51,11 +51,11 @@
           other_content: "",
           site: "",
           sports_equipment: "",
-          make_an_appointment: []
+          rows: []
         },
         table: {
           mock: false,
-          url: 'course_manage/compile_init',
+          url: 'course_manage/select',
           // baseParam: {campus_id: 1},
           method: 'GET',
           columns: [
@@ -163,7 +163,7 @@
     created() {
       // this.columsInit()
       //课程安排初始化
-      compileInit().then(res => {
+      select().then(res => {
         this.formInline = res
       })
     }
