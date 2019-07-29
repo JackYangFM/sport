@@ -11,7 +11,6 @@ export async function compileInit(params,mock) {
     });
 }
 
-select
 //课程安排
 export async function select(params,mock) {
     return request('course_manage/select',{
