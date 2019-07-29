@@ -20,7 +20,7 @@
       <div class="l-content" :style="{ left:menuToggle }">
         <router-view/>
       </div>
-      <Select :class="[ campus == true ? 'hide' : '' ]" @on-change="changetenement" size="small" placeholder="请选择校区"
+      <Select :class="[ campus == true ? 'hide' : 'show' ]" @on-change="changetenement" size="small" placeholder="请选择校区"
               v-model="campusList.campus_id">
         <Option v-for="(item,index) in campusList" :key="item.campus_id + index" :value="item.campus_id">
           {{item.campus_name}}
@@ -135,9 +135,17 @@
     text-align: center;
     float: left;
   }
-  
+
   .l-app {
-    .ivu-select {
+    .hide {
+      position: relative;
+      top: 20px;
+      right: 30px;
+      float: right;
+      z-index: 999;
+      width: 200px;
+    }
+    .show{
       position: relative;
       top: 20px;
       right: 30px;

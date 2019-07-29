@@ -101,67 +101,8 @@
           name: 'parent',
         });
       }
-      // 初始化表头
-      /*columsInit() {
-          let timeStr1 = 'timeStr1'
-          let startMonth = timeStr1 + '月维护企业数'
-          let timeStr2 = 'timeStr2'
-          let midMonth = timeStr2 + '月维护企业数'
-          let timeStr3 = 'timeStr3'
-          let endMonth = timeStr3 + '月维护企业数'
-          this.tableColumns.splice(3, 4,
-              {
-                  title: startMonth,
-                  align: 'center',
-                  render: (h, params) => {
-                      //下面业务逻辑直接不用看
-                      // console.log(timeStr1)
-                      /!*   let arr = params.row.historyDataListDto || [];
-                         let obj = null
-                         arr.forEach((item, index) => { //有些人员，有些月份的数据没有
-                           if (item.month == timeStr1) {
-                             obj = arr[index]
-                           }
-                         })
-                         if (obj) {
-                           return h('a', {
-                             on: {
-                               click: () => {
-                                 this.toDetail(params.row.uId, params.row.class2Id, obj.month, obj.month, obj.dirId)
-                               }
-                             }
-                           }, obj.whsNum)
-                         } else {
-                           return h('span', '--')
-                         }
-                      *!/
-                      //业务逻辑
-                  }
-              },
-              {
-                  title: midMonth,
-                  align: 'center',
-                  render: (h, params) => {
-
-                  }
-              },
-              {
-                  title: endMonth,
-                  align: 'center',
-                  render: (h, params) => {
-
-                  }
-              },
-              {
-                  title: '平均',
-                  align: 'center',
-                  key: 'avgNum'
-              }
-          )
-      },*/
     },
     created() {
-      // this.columsInit()
       //课程安排初始化
       select().then(res => {
         this.formInline = res

@@ -51,37 +51,31 @@
                     columns: [
                         {
                             title: '员工',
-                            key: 'time_quantum',
+                            key: 'staff_name',
                             align: 'center',
                             minWidth: 170
                         },
                         {
                             title: '性别',
-                            key: 'personName',
+                            key: 'gender',
                             align: 'center',
                             minWidth: 120
                         },
                         {
                             title: '年龄',
-                            key: 'createTime',
+                            key: 'birth',
                             align: 'center',
                             minWidth: 160
                         },
                         {
-                            title: '课时（总课时 | 剩余课时）',
-                            key: 'personName',
+                            title: '职位',
+                            key: 'position',
                             align: 'center',
                             minWidth: 120
                         },
                         {
-                            title: '成单员工',
-                            key: 'personName',
-                            align: 'center',
-                            minWidth: 120
-                        },
-                        {
-                            title: '成交时间',
-                            key: 'personName',
+                            title: '联系电话',
+                            key: 'phone',
                             align: 'center',
                             minWidth: 120
                         },
@@ -92,22 +86,6 @@
                             align: 'center',
                             render: (h, params) => {
                                 return h('div', [
-                                    h('span', {
-                                        props: {
-                                            type: 'primary',
-                                            size: 'small'
-                                        },
-                                        style: {
-                                            marginRight: '5px',
-                                            color: "#2d8cf0",
-                                            cursor: "pointer"
-                                        },
-                                        on: {
-                                            click: () => {
-                                                this.batchConsume({roomId: params.row.roomId})
-                                            }
-                                        }
-                                    }, '课时消耗'),
                                     h('span', {
                                         props: {
                                             type: 'primary',
@@ -139,7 +117,23 @@
                                                 this.batchUpdate(params.row)
                                             }
                                         }
-                                    }, '修改')
+                                    }, '修改'),
+                                h('span', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px',
+                                        color: "red",
+                                        cursor: "pointer"
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.batchDel({staff_id: params.row.staff_id})
+                                        }
+                                    }
+                                }, '删除'),
                                 ]);
 
                             }
@@ -153,7 +147,17 @@
 
             },
             add() {
-
+                this.$router.push({
+                    name: 'StaffManageAdd',
+                });
+            },
+            batchUpdate(params){
+                this.$router.push({
+                    name: 'StaffManageEdit',
+                    params: {
+                        staff_id: params.staff_id
+                    }
+                });
             }
         }
     }

@@ -115,3 +115,24 @@ export async function login(params,mock) {
     }
   });
 }
+
+//获取职员职位数据
+export async function positionSelect(params,mock) {
+  return request('commonality_manage/position_select',{
+    mock:mock ? mock : false,
+    body:{
+      method:'GET',
+      data:params
+    }
+  });
+}
+
+//获取各个职位的员工
+export async function staffSelect(params,mock) {
+  return request('commonality_manage/staff_select',{
+    mock:mock ? mock : false,
+    body:{
+      data:params
+    }
+  });
+}
