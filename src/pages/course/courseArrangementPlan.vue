@@ -38,7 +38,7 @@
 <script>
   import Tips from '../../components/tips'
   
-  import {compileInit} from "@/service/courseArrangement"
+  import {compileInit, compile} from "@/service/courseArrangement"
   
   export default {
     name: "CourseArrangement",
@@ -58,9 +58,9 @@
           make_an_appointment: [],
         },
         ruleValidate: {
-          time_quantum:[
-            {required: true, message: '请选择开课时间', trigger: 'blur'}
-          ],
+          // time_quantum:[
+          //   {required: true, message: '请选择开课时间'}
+          // ],
           site: [
             {required: true, message: '请输入集合地点', trigger: 'blur'}
           ],
@@ -80,7 +80,13 @@
     methods: {
       handleSubmit() {
         this.$refs['formValidate'].validate((valid) => {
-
+            if(valid){
+              compile(this.formValidate).then(res => {
+                this.$router.push({
+                  name: 'courseArrangement',
+                });
+              })
+            }
         })
       }
     },

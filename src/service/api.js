@@ -100,7 +100,7 @@ export async function queryPerms(params) {
   });
 }
 
-//获取校区数据
+//5.1获取校区数据
 export async function campusSelect(params, mock) {
   return request('commonality_manage/campus_select', {
     mock: mock ? mock : false,
@@ -121,7 +121,7 @@ export async function login(params, mock) {
   });
 }
 
-//获取课程时间
+//5.4获取课程时间
 export async function courseTimeSelect(params, mock) {
   return request('commonality_manage/course_time_select', {
     mock: mock ? mock : false,
@@ -131,7 +131,7 @@ export async function courseTimeSelect(params, mock) {
   });
 }
 
-//获取职员职位数据
+//5.2获取职员职位数据
 export async function positionSelect(params,mock) {
   return request('commonality_manage/position_select',{
     mock:mock ? mock : false,
@@ -142,7 +142,7 @@ export async function positionSelect(params,mock) {
   });
 }
 
-//获取各个职位的员工
+//5.3获取各个职位的员工
 export async function staffSelect(params,mock) {
   return request('commonality_manage/staff_select',{
     mock:mock ? mock : false,

@@ -9,7 +9,7 @@
       <h3 style="margin: 10px 15px;">{{parseTime(new Date().getTime(), '{y}年{m}月{d}日')}}课程信息：</h3>
       <Form ref="query" :model="formInline" inline label-position="right" :label-width="150">
         <FormItem label="开课时间：" prop="course_content">
-          <p v-for="(item,index) of  formInline.rows" :key="index">{{item.time_quantum}}</p>
+          <p v-for="(item,index) in formInline.rows" :key="index">{{item.time_quantum[0]}} - {{item.time_quantum[1]}}</p>
         </FormItem>
         <FormItem label="所需器材：" prop="course_time">
           <p>{{formInline.sports_equipment}} </p>
@@ -63,7 +63,11 @@
               title: '开课时间',
               key: 'time_quantum',
               align: 'center',
-              minWidth: 170
+              minWidth: 170,
+              render: (h, params) => {
+                return h('span', {}, params.row.time_quantum[0] + '-' + params.row.time_quantum[1]
+                );
+              }
             },
             {
               title: '学员人数',
@@ -98,7 +102,7 @@
       },
       parentChoose() {
         this.$router.push({
-          name: 'parent',
+          name: 'parentwy',
         });
       }
     },

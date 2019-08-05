@@ -28,6 +28,7 @@
 <script>
     import Tips from '../../components/tips'
     import BaseTable from '../../components/baseTable'
+    import {staffIManageDelete} from "@/service/staff"
 
 
     export default {
@@ -98,7 +99,7 @@
                                         },
                                         on: {
                                             click: () => {
-                                                this.batchDetaile({roomId: params.row.xxid})
+                                                this.batchDetaile(params.row)
                                             }
                                         }
                                     }, '详情'),
@@ -144,7 +145,7 @@
         },
         methods: {
             search() {
-
+                this.$refs['basetable'].query(this.formInline);
             },
             add() {
                 this.$router.push({
@@ -154,6 +155,35 @@
             batchUpdate(params){
                 this.$router.push({
                     name: 'StaffManageEdit',
+                    params: {
+                        staff_id: params.staff_id
+                    }
+                });
+            },
+            batchDel(delparams){
+                this.$Modal.confirm({
+                    title: '是否继续？',
+                    content: '<p>该操作将导致基础数据数据无法恢复，请谨慎操作！</p>',
+                    onOk: () => {
+                        this.spinShow = !this.spinShow;
+                        staffIManageDelete(delparams)
+                            .then(res=>{
+                                this.spinShow = !this.spinShow;
+                                if(res!==false){
+                                    this.$refs['basetable'].query(this.formInline);
+                                    this.formInline.roomName = ''
+                                }else{
+                                    this.$refs['basetable'].query(this.formInline);
+                                }
+                            })
+                    },
+                    onCancel: () => { }
+                });
+            },
+            //详情
+            batchDetaile(params){
+                this.$router.push({
+                    name: 'StaffManageDetail',
                     params: {
                         staff_id: params.staff_id
                     }
