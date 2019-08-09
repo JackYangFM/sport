@@ -83,7 +83,7 @@
             // console.log("登陆成功");
             login(this.formInline).then((res)=>{
               this.$router.push({
-                name: 'courseArrangementPlan',
+                name: 'orderManage',
               });
             })
           } else {

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="order-manage">
         <Tips title="订单管理"></Tips>
         <div class="c-query">
             <Form ref="query" :model="formInline" inline>
@@ -30,8 +30,47 @@
             </Button>
             <Button type="primary" @click="consume">课时消耗</Button>
         </div>
-        <BaseTable v-bind="table" ref="basetable"></BaseTable>
+        <BaseTable v-bind="table" ref="basetable" @selectionChange="getTableSelection"></BaseTable>
+        <Modal
+                v-model="modal1"
+                width="500px"
+                class-name="c-modal"
+                title="课时消耗"
+                @on-ok="ok"
+        >
+            <div class="c-form order-manage-modal-form" style="padding:12px 0; margin: 0">
+                <Form ref="formValidate" :model="detailItems" :rules="ruleValidate" inline>
+                    <FormItem label="上课时间：" prop="order">
+                        <span style="width: 40%;float:left; margin-right: 10px;">{{parseTime(new Date().getTime(), '{y}年{m}月{d}日')}}</span>
 
+                        <Select style="width: 50%;" v-model="detailItems.order" placeholder="请选择上课时间" label-in-value
+                                @on-change="changeOption">
+                            <Option v-for="(item,index) in courseTime" :key="index" :value="item.order">
+                                {{item.time_quantum[0] + '-' + item.time_quantum[1]}}
+                            </Option>
+                        </Select>
+                    </FormItem>
+                    <FormItem label="代课教练：" prop="one_staff_id">
+                        <Select v-model="detailItems.one_staff_id">
+                            <Option v-for="(item,index) in staffItems" :key="index" :value="item.staff_id">
+                                {{item.staff_name}}
+                            </Option>
+                        </Select>
+                    </FormItem>
+                    <FormItem label="助教：">
+                        <Select v-model="detailItems.two_staff_id">
+                            <Option v-for="(item,index) in assistantItems" :key="index" :value="item.staff_id">
+                                {{item.staff_name}}
+                            </Option>
+                        </Select>
+                    </FormItem>
+                </Form>
+            </div>
+            <div slot="footer">
+                <Button ghost>取消</Button>
+                <Button type="primary" @click="ok">确定</Button>
+            </div>
+        </Modal>
     </div>
 
 </template>
@@ -39,7 +78,13 @@
 <script>
     import Tips from '../../components/tips'
     import BaseTable from '../../components/baseTable'
+    import {courseTimeSelect, staffSelect} from "@/service/api"
+    import {consumeCourse} from "@/service/order"
 
+
+    import {parseTime} from '../../utils/index'
+
+    let c;
 
     export default {
         name: "home",
@@ -49,20 +94,37 @@
         },
         data() {
             return {
+                modal1: false,
+                staffItems: [],//教练
+                assistantItems: [],//助教
+                courseTime: {}, // 课程时间
                 formInline: {
                     staff_name: '',
                     order_time: ['', ''],
                     student_name: ''
                 },
+                detailItems: {
+                    order: '',
+                    order_ids: [],
+                    course_time: '',
+                    one_staff_id: '',
+                    two_staff_id: ''
+                },
+                selection: [],
                 table: {
                     mock: false,
                     baseParam: {
                         staff_name: '',
-                        order_time: '',
+                        order_time: ['', ''],
                         student_name: ''
                     },
                     url: 'order_manage/select',
                     columns: [
+                        {
+                            type: 'selection',
+                            align: 'center',
+                            minWidth: 50
+                        },
                         {
                             title: '学员名',
                             key: 'student_name',
@@ -77,7 +139,7 @@
                         },
                         {
                             title: '年级',
-                            key: 'personName',
+                            key: 'grade',
                             align: 'center',
                             minWidth: 120
                         },
@@ -102,7 +164,7 @@
                         {
                             title: '操作',
                             key: 'action',
-                            width: 140,
+                            width: 160,
                             align: 'center',
                             render: (h, params) => {
                                 return h('div', [
@@ -118,7 +180,7 @@
                                         },
                                         on: {
                                             click: () => {
-                                                this.batchConsume({roomId: params.row.roomId})
+                                                this.batchConsume(params.row.order_id)
                                             }
                                         }
                                     }, '课时消耗'),
@@ -134,7 +196,7 @@
                                         },
                                         on: {
                                             click: () => {
-                                                this.batchDetaile({order_id: params.row.order_id})
+                                                this.batchDetaile(params.row)
                                             }
                                         }
                                     }, '详情'),
@@ -160,66 +222,147 @@
                         }
                     ]
                 },
+                ruleValidate: {
+                    order: [
+                        {required: true, message: '请选择时间'}
+                    ],
+                    one_staff_id: [
+                        {required: true, message: '请选择代课教练'}
+                    ]
+                },
             }
         },
         methods: {
+            parseTime(time, options) {
+                return parseTime(time, options)
+            },
+            getTableSelection(selection) {
+                this.selection = selection
+            },
             add() {
                 this.$router.push({name: 'orderManageAdd'})
             },
             //课时消耗
             consume() {
+                if (this.selection.length >= 1) {
+                    const order_ids = this.selection.map((item) => {
+                        return item.order_id
+                    })
+                    this.modal1 = true;
+                    // this.detailItems.order_ids = []
+                    this.detailItems.order_ids = order_ids
+                    console.log(123, this.detailItems.order_ids)
+                }else{
+                    this.$Message.error('请至少选择一项')
+                }
 
             },
             //每条课时消耗
-            batchConsume() {
-
+            batchConsume(params) {
+                this.modal1 = true;
+                this.detailItems.order_ids = []
+                this.detailItems.order_ids.push(params)
+                console.log(this.detailItems.order_ids)
             },
             //详情
-            batchDetaile() {
-
+            batchDetaile(params) {
+                this.$router.push({
+                    name: 'orderManageDetail',
+                    params: {
+                        order_id: params.order_id
+                    }
+                })
             },
             //修改
-            batchUpdate() {
-
+            batchUpdate(params) {
+                this.$router.push({
+                    name: 'orderManageEdit',
+                    params: {
+                        order_id: params.order_id
+                    }
+                })
             },
             search() {
                 //处理日期格式
-                let startTime1=this.formInline.importDateRange[0];
-                let endTime1=this.formInline.importDateRange[1];
-                if(startTime1==''){
-                    this.formInline.importDateRange=['',''];
+                let startTime1 = this.formInline.order_time[0];
+                let endTime1 = this.formInline.order_time[1];
+                if (startTime1 == '') {
+                    this.formInline.order_time = ['', ''];
                     this.$refs['basetable'].query(this.formInline); //查询
-                }
-                else {
+                } else {
                     if (startTime1.toString().indexOf('-') == -1) {
-                        let startDate1=startTime1.getDate();
-                        let endDate1=endTime1.getDate();
-                        if(startDate1<10){
-                            startDate1='0'+startDate1;
+                        let startDate1 = startTime1.getDate();
+                        let endDate1 = endTime1.getDate();
+                        if (startDate1 < 10) {
+                            startDate1 = '0' + startDate1;
                         }
-                        if(endDate1<10){
-                            endDate1='0'+endDate1;
+                        if (endDate1 < 10) {
+                            endDate1 = '0' + endDate1;
                         }
-                        let startMounth1=startTime1.getMonth() + 1;
-                        let endMounth1=endTime1.getMonth() + 1;
-                        if(startMounth1<10){
-                            startMounth1='0'+startMounth1
+                        let startMounth1 = startTime1.getMonth() + 1;
+                        let endMounth1 = endTime1.getMonth() + 1;
+                        if (startMounth1 < 10) {
+                            startMounth1 = '0' + startMounth1
                         }
-                        if(endMounth1<10){
-                            endMounth1='0'+endMounth1;
+                        if (endMounth1 < 10) {
+                            endMounth1 = '0' + endMounth1;
                         }
-                        let startTime2 = startTime1.getFullYear() + '-' + startMounth1+ '-' + startDate1;
+                        let startTime2 = startTime1.getFullYear() + '-' + startMounth1 + '-' + startDate1;
                         let endTime2 = endTime1.getFullYear() + '-' + endMounth1 + '-' + endDate1;
-                        this.formInline.importDateRange = [startTime2, endTime2]
+                        this.formInline.order_time = [startTime2, endTime2]
                         this.$refs['basetable'].query(this.formInline); //查询
                     }
                 }
             },
+            changeOption(item) {
+                c = item.label.replace(/\s+/g, '')
+            },
+            ok() {
+                this.$refs['formValidate'].validate((valid) => {
+                    if (valid) {
+                        this.modal1 = false
+                        let n = parseTime(new Date().getTime(), '{y}年{m}月{d}日')
+                        this.detailItems.course_time = n + ' ' + c
+                        consumeCourse(this.detailItems).then(res => {
+                            if(res !== false){
+                                this.selection.length = 0
+                                this.$refs['basetable'].query(this.formInline);
+                                return
+                            }
+                        })
+                    } else {
+                        return
+                    }
+                })
+            }
+        },
+        created() {
+            courseTimeSelect().then((res) => {
+                this.courseTime = res
+                this.detailItems.order = this.detailItems.order ? this.detailItems.order : res[0].order;
+
+            })
+            staffSelect({position: 0}).then((res) => {
+                this.staffItems = res
+                // this.detailItems.one_staff_id = this.detailItems.order ? this.detailItems.order : res[0].order;
+
+            })
+            staffSelect({position: 2}).then((res) => {
+                this.assistantItems = res
+            })
         }
     }
 </script>
 
 <style lang="less">
+    .order-manage-modal-form {
+        width: auto;
+
+        .ivu-form-inline .ivu-form-item {
+            width: 100% !important;
+        }
+    }
+
     .fade-enter-active, .fade-leave-active {
         transition: opacity .5s;
     }

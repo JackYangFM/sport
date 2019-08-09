@@ -129,6 +129,7 @@
 
             WuYiSelect().then((res) => {
                 this.parentDataWy = res
+                console.log(res)
             })
         },
         methods: {

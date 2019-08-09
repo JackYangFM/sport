@@ -12,7 +12,7 @@
       </div>
       <div class="l-sider" :style="{ width:menuToggle }">
         <Menu :style="{ width:menuToggle }" active-name="1">
-          <MenuItem v-for="(item,index) in menu" :key="index" :name="item.menuCode" :to="item.menuPath">
+          <MenuItem v-for="(item,index) in this.$store.state.index.menu" :key="index" :name="item.menuCode" :to="item.menuPath">
             {{item.menuName}}
           </MenuItem>
         </Menu>
@@ -27,12 +27,13 @@
         </Option>
       </Select>
     </div>
-  
+
   </div>
 </template>
 <script>
   import {campusSelect} from "@/service/api"
-  
+  import { mapState, mapActions }  from 'vuex'
+
   export default {
     data() {
       return {
@@ -40,34 +41,17 @@
         campus: false,
         isRouterAlive: true,
         campusList: [],
-        menu: [
-          {
-            menuCode: "1",
-            menuName: '订单管理',
-            menuPath: 'orderManage'
-          },
-          {
-            menuCode: "2",
-            menuName: '收入支出统计',
-            menuPath: 'incomePayManage'
-          },
-          {
-            menuCode: "3",
-            menuName: '员工管理',
-            menuPath: 'staffManage'
-          },
-          {
-            menuCode: "4",
-            menuName: '课程安排',
-            menuPath: 'courseArrangement'
-          }
-        ]
+        // menu: []
       }
     },
     computed: {
+
+      ...mapState(['menu']),
+
       menuToggle() {
         return this.isCollapsed ? '78px' : '200px';
-      }
+      },
+
     },
     methods: {
       home() {
@@ -108,6 +92,7 @@
     },
     created() {
       this.permission()
+      console.log(this.$store)
     }
   }
 </script>
@@ -116,20 +101,20 @@
     background-color: rgba(68, 97, 125, 1);
     line-height: 60px;
     color: #fff;
-    
+
     .ivu-breadcrumb {
       color: #fff;
     }
-    
+
     .ivu-breadcrumb a {
       color: #fff;
     }
-    
+
     .ivu-breadcrumb > span:last-child {
       color: #fff;
     }
   }
-  
+
   .logo {
     width: 220px;
     text-align: center;
