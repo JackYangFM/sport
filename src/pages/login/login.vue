@@ -124,10 +124,11 @@
 <style lang="less">
   .l-container {
     background: url("../../assets/images/bg.png");
-    background-size: center;
+    background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
     padding-top: 60px;
+    background-position: center;
     
     .lc-logo {
       padding-top: 55px;

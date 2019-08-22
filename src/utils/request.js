@@ -17,7 +17,8 @@ const path = '/';//根据项目修改
 
 if(process.env.NODE_ENV === "development"){
   //本地开发可以随意修改
-  domain = 'http://103.45.101.170:8000/serviceManage';
+  // domain = 'http://103.45.101.170:8000';
+  domain = 'http://47.104.165.12:8001'
   // domain = 'http://robot.ohaotian.com/hardware';
 }else{
   domain = '';

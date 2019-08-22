@@ -2,7 +2,7 @@ import request from '../utils/request'
 
 //3.1员工新增
 export async function select(params, mock) {
-    return request('staff_manage/select', {
+    return request('serviceManage/staff_manage/select', {
         mock: mock ? mock : false,
         body: {
             data: params
@@ -12,7 +12,7 @@ export async function select(params, mock) {
 
 //3.2员工新增
 export async function staffIManageInsert(params, mock) {
-    return request('staff_manage/insert', {
+    return request('serviceManage/staff_manage/insert', {
         mock: mock ? mock : false,
         body: {
             data: params
@@ -22,7 +22,7 @@ export async function staffIManageInsert(params, mock) {
 
 //3.3员工修改初始化
 export async function staffIManageUpdateInit(params, mock) {
-    return request('staff_manage/update_init', {
+    return request('serviceManage/staff_manage/update_init', {
         mock: mock ? mock : false,
         body: {
             data: params
@@ -32,7 +32,7 @@ export async function staffIManageUpdateInit(params, mock) {
 
 //3.4员工修改
 export async function staffIManageUpdate(params, mock) {
-    return request('staff_manage/update', {
+    return request('serviceManage/staff_manage/update', {
         mock: mock ? mock : false,
         body: {
             data: params
@@ -42,7 +42,7 @@ export async function staffIManageUpdate(params, mock) {
 
 //3.5员工删除
 export async function staffIManageDelete(params, mock) {
-    return request('staff_manage/delete', {
+    return request('serviceManage/staff_manage/delete', {
         mock: mock ? mock : false,
         body: {
             data: params
@@ -52,7 +52,7 @@ export async function staffIManageDelete(params, mock) {
 
 //3.6员工详情数据查询
 export async function details(params, mock) {
-    return request('staff_manage/details', {
+    return request('serviceManage/staff_manage/details', {
         mock: mock ? mock : false,
         body: {
             data: params

@@ -118,7 +118,7 @@
                         order_time: ['', ''],
                         student_name: ''
                     },
-                    url: 'order_manage/select',
+                    url: 'serviceManage/order_manage/select',
                     columns: [
                         {
                             type: 'selection',
@@ -339,7 +339,7 @@
         created() {
             courseTimeSelect().then((res) => {
                 this.courseTime = res
-                this.detailItems.order = this.detailItems.order ? this.detailItems.order : res[0].order;
+                // this.detailItems.order = this.detailItems.order ? this.detailItems.order : res[0].order;
 
             })
             staffSelect({position: 0}).then((res) => {

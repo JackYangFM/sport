@@ -31,7 +31,7 @@
                 <FormItem label="总课时：" prop="totalCourse">
                     <Input v-model="formValidate.total_course" placeholder="请输入总课时"/>
                 </FormItem>
-                <FormItem label="成交学员：" prop="staff">
+                <FormItem label="成交员工：" prop="staff_id">
                     <Select v-model="formValidate.staff_id">
                         <Option v-for="(item,index) in staffItems" :key="index" :value="item.staff_id">
                             {{item.staff_name}}
@@ -128,9 +128,8 @@
         },
         created() {
             //获取成交员工数据
-            staffSelect().then((res) => {
+            staffSelect({position:''}).then((res) => {
                 this.staffItems = res
-                // this.formValidate.position = this.formValidate.position ? this.formValidate.position : res[0].position
             })
         }
     }

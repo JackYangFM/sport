@@ -48,7 +48,7 @@
                         campus_id: "",
                         staff_name: '',
                     },
-                    url: 'staff_manage/select',
+                    url: 'serviceManage/staff_manage/select',
                     columns: [
                         {
                             title: '员工',

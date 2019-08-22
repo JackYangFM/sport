@@ -1,7 +1,7 @@
 <template>
     <div class="staff-manage-datail">
         <Tips title="员工详情信息"></Tips>
-        <div class="c-form ">
+        <div class="c-form">
             <Form class="base-form" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100"
                   inline>
                 <FormItem label="姓名：" prop="staff_name">
@@ -69,7 +69,7 @@
                 ruleValidate: {},
                 orderTable: {
                     mock: false,
-                    url: 'staff_manage/order_select',
+                    url: 'serviceManage/staff_manage/order_select',
                     baseParam: {staff_id: this.$route.params.staff_id},
                     columns: [
                         {
@@ -112,7 +112,7 @@
                 },
                 agentTable: {
                     mock: false,
-                    url: 'staff_manage/record_select',
+                    url: 'serviceManage/staff_manage/record_select',
                     baseParam: {staff_id: this.$route.params.staff_id},
                     columns: [
                         {
@@ -170,7 +170,7 @@
         }
     }
 </script>
-<style lang="less">
+<style lang="less" scoped>
     .staff-manage-datail {
         .c-form {
             width: auto;

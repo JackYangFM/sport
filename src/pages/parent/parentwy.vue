@@ -95,7 +95,7 @@
                 },
                 table: {
                     mock: false,
-                    url: 'course_manage/WuYi_select',
+                    url: 'serviceManage/course_manage/WuYi_select',
                     // baseParam: {campus_id: 1},
                     method: 'GET',
                     columns: [

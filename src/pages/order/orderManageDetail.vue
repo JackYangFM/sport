@@ -91,7 +91,7 @@
                 ruleValidate: {},
                 classTable: {
                     mock: false,
-                    url: 'order_manage/class_register',
+                    url: 'serviceManage/order_manage/class_register',
                     baseParam: {order_id: this.$route.params.order_id},
                     columns: [
                         {
@@ -149,7 +149,7 @@
         }
     }
 </script>
-<style lang="less">
+<style lang="less" scoped>
     .c-form {
         width: auto;
 

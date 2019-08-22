@@ -102,7 +102,7 @@ export async function queryPerms(params) {
 
 //5.1获取校区数据
 export async function campusSelect(params, mock) {
-  return request('commonality_manage/campus_select', {
+  return request('serviceManage/commonality_manage/campus_select', {
     mock: mock ? mock : false,
     body: {
       method: 'GET',
@@ -113,7 +113,7 @@ export async function campusSelect(params, mock) {
 
 //登录
 export async function login(params, mock) {
-  return request('user_manage/login', {
+  return request('serviceManage/user_manage/login', {
     mock: mock ? mock : false,
     body: {
       data: params
@@ -123,7 +123,7 @@ export async function login(params, mock) {
 
 //5.4获取课程时间
 export async function courseTimeSelect(params, mock) {
-  return request('commonality_manage/course_time_select', {
+  return request('serviceManage/commonality_manage/course_time_select', {
     mock: mock ? mock : false,
     body: {
       data: params
@@ -133,7 +133,7 @@ export async function courseTimeSelect(params, mock) {
 
 //5.2获取职员职位数据
 export async function positionSelect(params,mock) {
-  return request('commonality_manage/position_select',{
+  return request('serviceManage/commonality_manage/position_select',{
     mock:mock ? mock : false,
     body:{
       method:'GET',
@@ -144,7 +144,7 @@ export async function positionSelect(params,mock) {
 
 //5.3获取各个职位的员工
 export async function staffSelect(params,mock) {
-  return request('commonality_manage/staff_select',{
+  return request('serviceManage/commonality_manage/staff_select',{
     mock:mock ? mock : false,
     body:{
       data:params

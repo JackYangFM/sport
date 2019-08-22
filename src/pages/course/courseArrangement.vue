@@ -55,7 +55,7 @@
         },
         table: {
           mock: false,
-          url: 'course_manage/select',
+          url: 'serviceManage/course_manage/select',
           // baseParam: {campus_id: 1},
           method: 'GET',
           columns: [

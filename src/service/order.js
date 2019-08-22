@@ -32,7 +32,7 @@ export async function update(params, mock) {
 
 //1.5订单详情数据查询
 export async function details(params, mock) {
-    return request('order_manage/details', {
+    return request('serviceManage/order_manage/details', {
         mock: mock ? mock : false,
         body: {
             data: params
@@ -42,7 +42,7 @@ export async function details(params, mock) {
 
 //1.6学员上课课程记录
 export async function classRegister(params, mock) {
-    return request('order_manage/class_register', {
+    return request('serviceManage/order_manage/class_register', {
         mock: mock ? mock : false,
         body: {
             data: params
@@ -52,7 +52,7 @@ export async function classRegister(params, mock) {
 
 //1.7课时消耗
 export async function consumeCourse(params, mock) {
-    return request('order_manage/consume_course', {
+    return request('serviceManage/order_manage/consume_course', {
         mock: mock ? mock : false,
         body: {
             data: params
