@@ -4,21 +4,25 @@
         <div class="c-form f-single">
             <Form class="base-form" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100"
                   style="width: 550px">
-                <FormItem label="支出人员：" prop="staff_id">
+                <FormItem label="收入类型：" prop="income_id">
+                    <Select v-model="formValidate.income_id">
+                        <Option v-for="(item,index) in staffItems" :key="index" :value="item.income_id">
+                            {{item.income_type}}
+                        </Option>
+                    </Select>
+                </FormItem>
+                <FormItem label="人员：" prop="staff_id">
                     <Select v-model="formValidate.staff_id">
                         <Option v-for="(item,index) in staffItems" :key="index" :value="item.staff_id">
                             {{item.staff_name}}
                         </Option>
                     </Select>
                 </FormItem>
-                <FormItem label="支出金额：" prop="spending_money">
-                    <Input clearable v-model="formValidate.spending_money" placeholder="请输入支出金额"/>
+                <FormItem label="金额：" prop="income_money">
+                    <Input clearable v-model="formValidate.income_money" placeholder="请输入收入金额"/>
                 </FormItem>
-                <FormItem label="支出时间：" prop="spending_time">
-                    <Input v-model="formValidate.spending_time" placeholder="请输入支出时间"/>
-                </FormItem>
-                <FormItem label="支出原因：" prop="spending_cause">
-                    <Input v-model="formValidate.spending_cause" placeholder="请输入支出原因"/>
+                <FormItem label="时间：" prop="income_time">
+                    <Input v-model="formValidate.income_time" placeholder="请输入收入时间"/>
                 </FormItem>
                 <FormItem label="备注：" prop="remark">
                     <Input v-model="formValidate.remark" type="textarea"  placeholder="请输入备注信息"/>
@@ -33,10 +37,10 @@
 <script>
     import Tips from '../../components/tips'
     import {staffSelect} from "@/service/api"
-    import {spendInsert} from "@/service/incomePay"
+    import {incomeInsert} from "@/service/incomePay"
 
     export default {
-        name: "orderManageAdd",
+        name: "incomeManageAdd",
         components: {
             Tips,
         },
@@ -45,25 +49,26 @@
                 staffItems: [],
                 formValidate: {
                     staff_name: '',
-                    spending_money: '',
-                    spending_time:'',
-                    spending_cause:'',
+                    income_money: '',
+                    income_time:'',
+                    income_type:'',
                     remark:'',
                 },
                 ruleValidate: {
+                    income_id: [
+                        {required: true, message: '请选择收入类型'}
+                    ],
                     staff_id: [
-                        {required: true, message: '请选择支出人员'}
+                        {required: true, message: '请选择收入人员'}
                     ],
-                    spending_money: [
-                        {required: true, message: '请输入支出金额', trigger: 'blur'}
+                    income_money: [
+                        {required: true, message: '请输入收入金额', trigger: 'blur'}
                     ],
-                    spending_time: [
-                        {required: true, message: '请输入支出时间', trigger: 'blur'}
-                    ],
-                    spending_cause: [
-                        {required: true, message: '请输入支出原因', trigger: 'blur'}
+                    income_time: [
+                        {required: true, message: '请输入收入时间', trigger: 'blur'}
                     ]
                 },
+
 
             }
         },
@@ -71,7 +76,7 @@
             handleSubmit() {
                 this.$refs['formValidate'].validate((valid) => {
                     if (valid) {
-                        spendInsert(this.formValidate).then(res => {
+                        incomeInsert(this.formValidate).then(res => {
                             if (res !== false) {
                                 this.$router.push({name: 'incomeManage'})
                             }
@@ -83,7 +88,7 @@
             }
         },
         created() {
-            //获取成交员工数据
+            //获取员工数据
             staffSelect({position:0}).then((res) => {
                 this.staffItems = res
             })

@@ -3,13 +3,13 @@
         <Tips title="支出统计"></Tips>
         <div class="c-query">
             <Form ref="query" :model="formInline" inline>
-                <FormItem label="员工名：" prop="statistics_time">
+                <FormItem label="员工名：" prop="staff_name">
                     <Input placeholder="请输入员工姓名（支持模糊查询）" clearable type="text" v-model="formInline.staff_name"
                            :maxlength='20'/>
                 </FormItem>
-                <FormItem label="时间：" prop="statistics_time">
+                <FormItem label="时间：" prop="spending_time">
                     <DatePicker type="daterange" placement="bottom-end" placeholder="请选择日期" style="width: 280px"
-                                v-model='formInline.statistics_time'></DatePicker>
+                                v-model='formInline.spending_time'></DatePicker>
                 </FormItem>
                 <FormItem>
                     <Button type="primary" @click="search">
@@ -37,7 +37,7 @@
 
 
     export default {
-        name: "incomeManage",
+        name: "spendingManage",
         components: {
             Tips,
             BaseTable
@@ -46,7 +46,7 @@
             return {
                 formInline: {
                     staff_name: '',
-                    statistics_time: ['', ''],
+                    spending_time: ['', ''],
                 },
                 table: {
                     mock: false,
@@ -116,10 +116,10 @@
         methods: {
             search() {
                 //处理日期格式
-                let startTime1 = this.formInline.statistics_time[0];
-                let endTime1 = this.formInline.statistics_time[1];
+                let startTime1 = this.formInline.spending_time[0];
+                let endTime1 = this.formInline.spending_time[1];
                 if (startTime1 == '') {
-                    this.formInline.statistics_time = ['', ''];
+                    this.formInline.spending_time = ['', ''];
                     this.$refs['basetable'].query(this.formInline); //查询
                 } else {
                     if (startTime1.toString().indexOf('-') == -1) {
@@ -141,14 +141,14 @@
                         }
                         let startTime2 = startTime1.getFullYear() + '-' + startMounth1 + '-' + startDate1;
                         let endTime2 = endTime1.getFullYear() + '-' + endMounth1 + '-' + endDate1;
-                        this.formInline.statistics_time = [startTime2, endTime2]
+                        this.formInline.spending_time = [startTime2, endTime2]
                         this.$refs['basetable'].query(this.formInline); //查询
                     }
                 }
             },
             //新增
             add() {
-                this.$router.push({name: 'incomeManageAdd'})
+                this.$router.push({name: 'spendingManageAdd'})
             },
             //删除
             batchDel(delparams) {
@@ -161,7 +161,7 @@
                                 if (res !== false) {
                                     this.$refs['basetable'].query(this.formInline);
                                     this.formInline.staff_name = ''
-                                    this.formInline.statistics_time = ['', '']
+                                    this.formInline.spending_time = ['', '']
                                 } else {
                                     this.$refs['basetable'].query(this.formInline);
                                 }

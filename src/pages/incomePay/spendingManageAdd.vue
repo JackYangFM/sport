@@ -21,7 +21,7 @@
                     <Input v-model="formValidate.spending_cause" placeholder="请输入支出原因"/>
                 </FormItem>
                 <FormItem label="备注：" prop="remark">
-                    <Input v-model="formValidate.remark" type="textarea"  placeholder="请输入备注信息"/>
+                    <Input v-model="formValidate.remark" type="textarea" placeholder="请输入备注信息"/>
                 </FormItem>
                 <FormItem>
                     <Button type="primary" @click="handleSubmit">提交</Button>
@@ -36,7 +36,7 @@
     import {spendInsert} from "@/service/incomePay"
 
     export default {
-        name: "orderManageAdd",
+        name: "spendingManageAdd",
         components: {
             Tips,
         },
@@ -46,9 +46,9 @@
                 formValidate: {
                     staff_name: '',
                     spending_money: '',
-                    spending_time:'',
-                    spending_cause:'',
-                    remark:'',
+                    spending_time: '',
+                    spending_cause: '',
+                    remark: '',
                 },
                 ruleValidate: {
                     staff_id: [
@@ -83,8 +83,8 @@
             }
         },
         created() {
-            //获取成交员工数据
-            staffSelect({position:0}).then((res) => {
+            //获取员工数据
+            staffSelect({position: 0}).then((res) => {
                 this.staffItems = res
             })
         }

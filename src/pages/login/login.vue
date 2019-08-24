@@ -82,6 +82,8 @@
             }
             // console.log("登陆成功");
             login(this.formInline).then((res)=>{
+              console.log(111,res)
+              localStorage.setItem('key', JSON.stringify(value));
               this.$router.push({
                 name: 'orderManage',
               });

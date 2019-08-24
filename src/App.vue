@@ -31,7 +31,7 @@
   </div>
 </template>
 <script>
-  import {campusSelect} from "@/service/api"
+  import {campusSelect,changeCampus} from "@/service/api"
   import { mapState, mapActions }  from 'vuex'
 
   export default {
@@ -58,14 +58,8 @@
         this.reset();
         location.href = '/';
       },
-      //点击三级菜单
-      selectItem(data) {
-        this.$router.push({
-          name: data
-        })
-      },
       changetenement(obj) {
-        updateHirer({campus_id: obj})
+        changeCampus({campus_id: obj})
           .then(res => {
             this.$Notice.success({title: '更新校区成功!'})
             // location.reload()

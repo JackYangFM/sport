@@ -121,6 +121,26 @@ export async function login(params, mock) {
   });
 }
 
+//0.2获取用户权限下所有校区
+export async function userCampus(params, mock) {
+  return request('serviceManage/user_manage/user_campus', {
+    mock: mock ? mock : false,
+    body: {
+      data: params
+    }
+  });
+}
+
+//0.3用户切换校区
+export async function changeCampus(params, mock) {
+  return request('serviceManage/user_manage/change_campus', {
+    mock: mock ? mock : false,
+    body: {
+      data: params
+    }
+  });
+}
+
 //5.4获取课程时间
 export async function courseTimeSelect(params, mock) {
   return request('serviceManage/commonality_manage/course_time_select', {

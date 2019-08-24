@@ -12,7 +12,7 @@
                                 v-model='formInline.statistics_time'></DatePicker>
                 </FormItem>
                 <FormItem label="收入类型：" prop="staff_id">
-                    <Select v-model="formValidate.staff_id">
+                    <Select v-model="formInline.staff_id">
                         <Option v-for="(item,index) in incomeTypeItems" :key="index" :value="item.staff_id">
                             {{item.staff_name}}
                         </Option>
@@ -40,7 +40,7 @@
 <script>
     import Tips from '../../components/tips'
     import BaseTable from '../../components/baseTable'
-    import {spendDelete} from "@/service/incomePay"
+    import {incomeDelete} from "@/service/incomePay"
 
 
     export default {
@@ -110,7 +110,7 @@
                                         },
                                         on: {
                                             click: () => {
-                                                this.batchDel({spending_id: params.row.spending_id})
+                                                this.batchDel({income_id: params.row.income_id})
                                             }
                                         }
                                     }, '删除')
@@ -166,12 +166,13 @@
                     title: '是否继续？',
                     content: '<p>该操作将导致基础数据数据无法恢复，请谨慎操作！</p>',
                     onOk: () => {
-                        spendDelete(delparams)
+                        incomeDelete(delparams)
                             .then(res => {
                                 if (res !== false) {
                                     this.$refs['basetable'].query(this.formInline);
                                     this.formInline.staff_name = ''
-                                    this.formInline.statistics_time = ['', '']
+                                    this.formInline.income_time = ['', '']
+                                    this.income_type = 0
                                 } else {
                                     this.$refs['basetable'].query(this.formInline);
                                 }
