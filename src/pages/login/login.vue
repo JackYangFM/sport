@@ -82,8 +82,8 @@
             }
             // console.log("登陆成功");
             login(this.formInline).then((res)=>{
-              console.log(111,res)
-              localStorage.setItem('key', JSON.stringify(value));
+              localStorage.setItem('menu', JSON.stringify(res.menu));
+              this.$store.dispatch('getMenuData')
               this.$router.push({
                 name: 'orderManage',
               });

@@ -11,9 +11,9 @@
         </Breadcrumb>
       </div>
       <div class="l-sider" :style="{ width:menuToggle }">
-        <Menu :style="{ width:menuToggle }" active-name="1">
-          <MenuItem v-for="(item,index) in this.$store.state.index.menu" :key="index" :name="item.menuCode" :to="item.menuPath">
-            {{item.menuName}}
+        <Menu :style="{ width:menuToggle }" :active-name="menuFocus" @on-select="handleFocus" >
+          <MenuItem v-for="(item,index) in this.$store.state.index.menu" :key="index" :name="item.menuCode">
+            <span @click="handleLink(item.menuPath)">{{item.menuName}}</span>
           </MenuItem>
         </Menu>
       </div>
@@ -41,6 +41,7 @@
         campus: false,
         isRouterAlive: true,
         campusList: [],
+        menuFocus: '1'
         // menu: []
       }
     },
@@ -54,6 +55,9 @@
 
     },
     methods: {
+      handleFocus (name) {
+        sessionStorage.setItem('menuStatus', JSON.stringify(name))
+      },
       home() {
         this.reset();
         location.href = '/';
@@ -62,11 +66,6 @@
         changeCampus({campus_id: obj})
           .then(res => {
             this.$Notice.success({title: '更新校区成功!'})
-            // location.reload()
-            /*this.isRouterAlive = false
-            this.$nextTick(function () {
-                this.isRouterAlive = true
-            })*/
           })
           .catch(err => {
             this.$Message.error(err);
@@ -83,10 +82,21 @@
             this.$Message.error(err);
           })
       },
+      handleLink(route){
+        this.$router.push({
+          name:route
+        })
+      }
     },
     created() {
       this.permission()
-      console.log(this.$store)
+      this.$store.dispatch('getMenuData') // 刷新的时候实时获取侧边菜单列表
+      const menuStatus = JSON.parse(sessionStorage.getItem('menuStatus'))
+      if (menuStatus) { // 判空
+        this.menuFocus = menuStatus
+      } else {
+        this.menuFocus = '1'
+      }
     }
   }
 </script>
@@ -131,6 +141,14 @@
       float: right;
       z-index: 999;
       width: 200px;
+    }
+  }
+  .ivu-menu-item, .ivu-menu-submenu-title {
+    padding: 0 !important;
+    span {
+      padding: 14px 24px;
+      display: flex;
+      justify-content: center;
     }
   }
 </style>

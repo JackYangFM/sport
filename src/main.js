@@ -12,7 +12,6 @@ import 'iview/dist/styles/iview.css';
 Vue.config.productionTip = false
 window.moment = moment
 Vue.use(iView)
-console.log(store)
 new Vue({
   router,
   store,
