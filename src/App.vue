@@ -7,13 +7,13 @@
         <h1 @click="home" class="logo">利晨体育</h1>
         <Breadcrumb separator=">">
           <BreadcrumbItem>当前位置</BreadcrumbItem>
-          <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
+          <BreadcrumbItem>{{currentPosition}}</BreadcrumbItem>
         </Breadcrumb>
       </div>
       <div class="l-sider" :style="{ width:menuToggle }">
         <Menu :style="{ width:menuToggle }" :active-name="menuFocus" @on-select="handleFocus" >
           <MenuItem v-for="(item,index) in this.$store.state.index.menu" :key="index" :name="item.menuCode">
-            <span @click="handleLink(item.menuPath)">{{item.menuName}}</span>
+            <span @click="handleLink(item.menuPath, item.menuName)">{{item.menuName}}</span>
           </MenuItem>
         </Menu>
       </div>
@@ -41,7 +41,8 @@
         campus: false,
         isRouterAlive: true,
         campusList: [],
-        menuFocus: '1'
+        menuFocus: '1',
+        currentPosition: ''
         // menu: []
       }
     },
@@ -82,7 +83,9 @@
             this.$Message.error(err);
           })
       },
-      handleLink(route){
+      handleLink(route, name){
+        sessionStorage.setItem('currentPosition', JSON.stringify(name))
+        this.currentPosition = name
         this.$router.push({
           name:route
         })
@@ -92,10 +95,13 @@
       this.permission()
       this.$store.dispatch('getMenuData') // 刷新的时候实时获取侧边菜单列表
       const menuStatus = JSON.parse(sessionStorage.getItem('menuStatus'))
-      if (menuStatus) { // 判空
+      const currentPosition = JSON.parse(sessionStorage.getItem('currentPosition'))
+      if (menuStatus && currentPosition) { // 判空
         this.menuFocus = menuStatus
+        this.currentPosition = currentPosition
       } else {
         this.menuFocus = '1'
+        this.currentPosition = JSON.parse(localStorage.getItem('menu'))[0].menuName
       }
     }
   }
