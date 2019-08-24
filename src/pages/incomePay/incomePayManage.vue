@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="income-pay">
         <Tips title="收入支出统计"></Tips>
         <div class="c-query">
             <Form ref="query" :model="formInline" inline>
@@ -9,17 +9,14 @@
                 </FormItem>
                 <FormItem>
                     <Button type="primary" @click="search">
-                        <Icon type="ios-search-strong"></Icon>
+                        <Icon type="md-search"/>
                         查询
                     </Button>
                 </FormItem>
             </Form>
         </div>
         <div class="c-operation">
-            <Button type="primary" @click="expend">
-                <Icon type="plus-circled"></Icon>
-                支出
-            </Button>
+            <Button type="primary" @click="expend">支出</Button>
             <Button type="primary" @click="otherIncome">其它收入</Button>
         </div>
         <BaseTable v-bind="table" ref="basetable"></BaseTable>
@@ -47,10 +44,9 @@
                 table: {
                     mock: false,
                     baseParam: {
-                        staff_name: '',
-                        spending_time: ['', ''],
+                        statistics_time: ['', ''],
                     },
-                    url: 'serviceManage/spending_manage/select',
+                    url: 'serviceManage/statistics_manage/select',
                     columns: [
                         {
                             title: '汇总时间',
@@ -96,13 +92,12 @@
                         },
                         {
                             title: '实际总收入（元）',
-                            key: 'order_time',
+                            key: 'total_money',
                             align: 'center',
                             minWidth: 120
                         }
                     ]
-                },
-
+                }
             }
         },
         methods: {
@@ -140,16 +135,21 @@
             },
             //支出
             expend() {
-                this.$router.push({name: 'incomeManage'})
+                this.$router.push({name: 'spendingManage'})
             },
             //其他收入
             otherIncome() {
-                this.$router.push({name: 'spendingManage'})
+                this.$router.push({name: 'incomeManage'})
             }
         }
     }
 </script>
 
 <style lang="less">
+    .income-pay{
+        .ivu-page {
+            display: none;
+        }
+    }
 
 </style>

@@ -71,9 +71,7 @@
         data() {
             return {
                 positionItems: [],
-                spinShow: false,
                 formValidate: {
-                    staff_name: '',
                     gender: '',
                     birth: '',
                     phone: '',
@@ -129,7 +127,6 @@
                 this.$refs['formValidate'].validate((valid) => {
                     if (valid) {
                         staffIManageUpdate(this.formValidate).then(res => {
-                            this.spinShow = !this.spinShow;
                             if (res !== false) {
                                 this.$router.push({name: 'staffManage'})
                             }

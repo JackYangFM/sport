@@ -17,15 +17,15 @@
                 </FormItem>
                 <FormItem>
                     <Button type="primary" @click="search">
-                        <Icon type="ios-search-strong"></Icon>
+                        <Icon type="md-search" />
                         查询
                     </Button>
                 </FormItem>
             </Form>
         </div>
         <div class="c-operation">
-            <Button type="primary" @click="add">
-                <Icon type="plus-circled"></Icon>
+            <Button type="success" @click="add">
+                <Icon type="md-add" />
                 新增
             </Button>
             <Button type="primary" @click="consume">课时消耗</Button>

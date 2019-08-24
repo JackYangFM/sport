@@ -8,15 +8,15 @@
                 </FormItem>
                 <FormItem>
                     <Button type="primary" @click="search">
-                        <Icon type="ios-search-strong"></Icon>
+                        <Icon type="md-search" />
                         查询
                     </Button>
                 </FormItem>
             </Form>
         </div>
         <div class="c-operation">
-            <Button type="primary" @click="add">
-                <Icon type="plus-circled"></Icon>
+            <Button type="success" @click="add">
+                <Icon type="md-add" />
                 新增
             </Button>
         </div>
@@ -165,10 +165,8 @@
                     title: '是否继续？',
                     content: '<p>该操作将导致基础数据数据无法恢复，请谨慎操作！</p>',
                     onOk: () => {
-                        this.spinShow = !this.spinShow;
                         staffIManageDelete(delparams)
                             .then(res=>{
-                                this.spinShow = !this.spinShow;
                                 if(res!==false){
                                     this.$refs['basetable'].query(this.formInline);
                                     this.formInline.roomName = ''

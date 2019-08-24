@@ -64,7 +64,6 @@
         data() {
             return {
                 staffItems: [],
-                spinShow: false,
                 formValidate: {
                     student_name: '',
                     gender: '0',
@@ -115,7 +114,6 @@
                     if (valid) {
                         console.log(this.formValidate)
                         insert(this.formValidate).then(res => {
-                            this.spinShow = !this.spinShow;
                             if (res !== false) {
                                 this.$router.push({name: 'orderManage'})
                             }
