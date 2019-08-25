@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view v-if="$route.path === '/login'"/>
+    <router-view v-if="$route.path === '/login'" @handlePosition="handlePosition"/>
     <router-view v-else-if="$route.path === '/parentwy' || $route.path === '/parenttbl' || $route.path === '/parenthhl'"/>
     <div class="l-app" v-else>
       <div class="l-header">
@@ -66,7 +66,8 @@
       changetenement(obj) {
         changeCampus({campus_id: obj})
           .then(res => {
-            this.$Notice.success({title: '更新校区成功!'})
+            // location.reload()
+            // this.$Notice.success({title: '更新校区成功!'})
           })
           .catch(err => {
             this.$Message.error(err);
@@ -77,6 +78,7 @@
           .then(res => {
             this.campusList = res
             this.campusList.campus_id = this.campusList.campus_id ? this.campusList.campus_id : res[0].campus_id
+            changeCampus({campus_id: this.campusList.campus_id})
             // updateHirer({campus_id:this.campusList.campus_id})
           })
           .catch(err => {
@@ -89,19 +91,24 @@
         this.$router.push({
           name:route
         })
+      },
+      handlePosition () {
+        const currentPosition = JSON.parse(sessionStorage.getItem('currentPosition'))
+        if (currentPosition) { // 判空
+          this.currentPosition = currentPosition
+        } else {
+          this.currentPosition = JSON.parse(localStorage.getItem('menu'))[0].menuName
+        }
       }
     },
     created() {
       this.permission()
       this.$store.dispatch('getMenuData') // 刷新的时候实时获取侧边菜单列表
       const menuStatus = JSON.parse(sessionStorage.getItem('menuStatus'))
-      const currentPosition = JSON.parse(sessionStorage.getItem('currentPosition'))
-      if (menuStatus && currentPosition) { // 判空
+      if (menuStatus) { // 判空
         this.menuFocus = menuStatus
-        this.currentPosition = currentPosition
       } else {
         this.menuFocus = '1'
-        this.currentPosition = JSON.parse(localStorage.getItem('menu'))[0].menuName
       }
     }
   }

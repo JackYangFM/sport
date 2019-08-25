@@ -14,7 +14,7 @@
                     </RadioGroup>
                 </FormItem>
                 <FormItem label="出生日期：" prop="birth">
-                    <Input clearable v-model="formValidate.birth" placeholder="请输入学员出生日期"/>
+                    <DatePicker v-model="formValidate.birth" format="yyyy年MM月dd日" type="date" placeholder="请输入学员出生日期" @on-change="changeTime" style="width: 450px;"></DatePicker>
                 </FormItem>
                 <FormItem label="联系电话：" prop="phone">
                     <Input v-model="formValidate.phone" placeholder="请输入学员联系电话"/>
@@ -26,7 +26,7 @@
                     <Input v-model="formValidate.school" placeholder="请输入学员所属学校"/>
                 </FormItem>
                 <FormItem label="金额：" prop="order_sum">
-                    <Input v-model="formValidate.order_sum" placeholder="请输入成交金额"/>
+                    <Input clearable v-model="formValidate.order_sum" placeholder="请输入成交金额" @on-keyup="checkNumVal" number/>
                 </FormItem>
                 <FormItem label="总课时：" prop="total_course">
                     <Input v-model="formValidate.total_course" placeholder="请输入总课时"/>
@@ -62,6 +62,25 @@
             Tips,
         },
         data() {
+            const money = (rule, value, callback) => {
+                if(!value){
+                    callback(new Error('请输入成交金额'));
+                }
+                else{
+                    callback();
+                }
+            };
+            const phone = (rule, value, callback) => {
+                let myreg=/^((0\d{2,3}-\d{7,8})|(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8})$/;
+                if(!value){
+                    callback(new Error('请输入学员联系方式'));
+                }
+                else if (!myreg.test(value)&&value!=='') {
+                    callback(new Error('请输入正确的手机号'));
+                } else {
+                    callback();
+                }
+            };
             return {
                 staffItems: [],
                 spinShow: false,
@@ -88,13 +107,13 @@
                         {required: true, message: '请输入学员出生日期', trigger: 'blur'}
                     ],
                     phone: [
-                        {required: true, message: '请输入学员联系方式', trigger: 'blur'}
+                        { required: true,validator:phone,type:'RegExp' },
                     ],
                     grade: [
                         {required: true, message: '请输入学员年级', trigger: 'blur'}
                     ],
                     order_sum: [
-                        {required: true, message: '请输入成交金额', trigger: 'blur',type:'number'}
+                        {required: true,validator:money,trigger: 'blur',type:'number',}
                     ],
                     total_course: [
                         {required: true, message: '请输入总课时', trigger: 'blur',type:'number'}
@@ -122,7 +141,14 @@
                 }).catch(err => {
                     this.$Message.error(err);
                 })
-            }
+            },
+            changeTime(old){
+                this.formValidate.birth = old
+            },
+            checkNumVal(){
+                const reg =(/[^0-9]/g)
+                this.formValidate.order_sum = this.formValidate.order_sum.toString().replace(reg,'')
+            },
         },
         created() {
             //获取成交员工数据

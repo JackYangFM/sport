@@ -45,7 +45,6 @@
                 table: {
                     mock: false,
                     baseParam: {
-                        campus_id: "",
                         staff_name: '',
                     },
                     url: 'serviceManage/staff_manage/select',

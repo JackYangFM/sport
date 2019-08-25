@@ -3,17 +3,17 @@
         <Tips title="其它收入记录"></Tips>
         <div class="c-query">
             <Form ref="query" :model="formInline" inline>
-                <FormItem label="员工名：" prop="statistics_time">
+                <FormItem label="员工名：" prop="income_time">
                     <Input placeholder="请输入员工姓名（支持模糊查询）" clearable type="text" v-model="formInline.staff_name"
                            :maxlength='20'/>
                 </FormItem>
-                <FormItem label="时间：" prop="statistics_time">
+                <FormItem label="时间：" prop="income_time">
                     <DatePicker type="daterange" placement="bottom-end" placeholder="请选择日期" style="width: 280px"
-                                v-model='formInline.statistics_time'></DatePicker>
+                                v-model='formInline.income_time'></DatePicker>
                 </FormItem>
                 <FormItem label="收入类型：" prop="income_type">
-                    <Select clearable v-model="formInline.income_type">
-                        <Option  v-for="(item,index) in typeItems" :key="index" :value="item.income_type">
+                    <Select clearable v-model="formInline.income_type" @on-change="handleChange" label-in-value @on-clear="handleClear">
+                        <Option  v-for="(item,index) in typeItems" :key="index" :value="item.income_type" :label="item.income_type_name">
                             {{item.income_type_name}}
                         </Option>
                     </Select>
@@ -68,14 +68,20 @@
                     url: 'serviceManage/income_manage/select',
                     columns: [
                         {
-                            title: '支出人员',
+                            title: '收入人员',
                             key: 'staff_name',
                             align: 'center',
                             minWidth: 140
                         },
                         {
-                            title: '支出金额',
-                            key: 'spending_money',
+                            title: '收入类型',
+                            key: 'income_type',
+                            align: 'center',
+                            minWidth: 120
+                        },
+                        {
+                            title: '金额',
+                            key: 'income_money',
                             align: 'center',
                             minWidth: 120
                         },
@@ -86,13 +92,7 @@
                             minWidth: 160
                         },
                         {
-                            title: '支出原因',
-                            key: 'spending_cause',
-                            align: 'center',
-                            minWidth: 160
-                        },
-                        {
-                            title: '支出原因',
+                            title: '备注',
                             key: 'remark',
                             align: 'center',
                             minWidth: 140
@@ -125,14 +125,31 @@
             }
         },
         methods: {
+            handleChange(obj){
+                if(obj){
+                    console.log(obj)
+
+                }else{
+                    console.log('xx',obj)
+                    this.$set(this.formInline, 'income_type', '')
+                }
+
+
+            },
+            handleClear(){
+                console.log(111,this.formInline.income_type)
+                // this.$set(this.formInline, 'income_type', 0)
+            },
             search() {
                 //处理日期格式
-                let startTime1 = this.formInline.statistics_time[0];
-                let endTime1 = this.formInline.statistics_time[1];
+                let startTime1 = this.formInline.income_time[0];
+                let endTime1 = this.formInline.income_time[1];
                 if (startTime1 == '') {
-                    this.formInline.statistics_time = ['', ''];
+                    console.log(0)
+                    this.formInline.income_time = ['', ''];
                     this.$refs['basetable'].query(this.formInline); //查询
                 } else {
+                    console.log(1)
                     if (startTime1.toString().indexOf('-') == -1) {
                         let startDate1 = startTime1.getDate();
                         let endDate1 = endTime1.getDate();
@@ -152,9 +169,11 @@
                         }
                         let startTime2 = startTime1.getFullYear() + '-' + startMounth1 + '-' + startDate1;
                         let endTime2 = endTime1.getFullYear() + '-' + endMounth1 + '-' + endDate1;
-                        this.formInline.statistics_time = [startTime2, endTime2]
-                        this.$refs['basetable'].query(this.formInline); //查询
+                        this.formInline.income_time = [startTime2, endTime2]
+                        this.$refs['basetable'].query(this.formInline);
                     }
+                    this.$refs['basetable'].query(this.formInline);
+
                 }
             },
             //新增
@@ -173,7 +192,7 @@
                                     this.$refs['basetable'].query(this.formInline);
                                     this.formInline.staff_name = ''
                                     this.formInline.income_time = ['', '']
-                                    this.income_type = 0
+                                    this.income_type = ''
                                 } else {
                                     this.$refs['basetable'].query(this.formInline);
                                 }

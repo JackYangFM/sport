@@ -2,7 +2,7 @@ import request from '../utils/request'
 
 //1.2订单新增
 export async function insert(params, mock) {
-    return request('order_manage/insert', {
+    return request('serviceManage/order_manage/insert', {
         mock: mock ? mock : false,
         body: {
             data: params
@@ -12,7 +12,7 @@ export async function insert(params, mock) {
 
 //1.3订单修改初始化
 export async function updateInit(params, mock) {
-    return request('order_manage/update_init', {
+    return request('serviceManage/order_manage/update_init', {
         mock: mock ? mock : false,
         body: {
             data: params
@@ -22,7 +22,7 @@ export async function updateInit(params, mock) {
 
 //1.4订单修改
 export async function update(params, mock) {
-    return request('order_manage/update', {
+    return request('serviceManage/order_manage/update', {
         mock: mock ? mock : false,
         body: {
             data: params

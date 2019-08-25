@@ -11,18 +11,18 @@
                         </Option>
                     </Select>
                 </FormItem>
-                <FormItem label="人员：" prop="staff_id">
-                    <Select v-model="formValidate.staff_id">
-                        <Option v-for="(item,index) in staffItems" :key="index" :value="item.staff_id">
+                <FormItem label="人员：" prop="staff_name">
+                    <Select v-model="formValidate.staff_name">
+                        <Option v-for="(item,index) in staffItems" :key="index" :value="item.staff_name" label-in-value :lable="item.staff_name">
                             {{item.staff_name}}
                         </Option>
                     </Select>
                 </FormItem>
                 <FormItem label="金额：" prop="income_money">
-                    <Input clearable v-model="formValidate.income_money" placeholder="请输入收入金额"/>
+                    <Input clearable v-model="formValidate.income_money"  @on-keyup="checkNumVal" placeholder="请输入收入金额" number/>
                 </FormItem>
                 <FormItem label="时间：" prop="income_time">
-                    <Input v-model="formValidate.income_time" placeholder="请输入收入时间"/>
+                    <DatePicker v-model="formValidate.income_time" format="yyyy-MM-dd" type="date" placeholder="请输入收入时间" @on-change="changeTime" style="width: 450px;"></DatePicker>
                 </FormItem>
                 <FormItem label="备注：" prop="remark">
                     <Input v-model="formValidate.remark" type="textarea" placeholder="请输入备注信息"/>
@@ -45,6 +45,14 @@
             Tips,
         },
         data() {
+            const money = (rule, value, callback) => {
+                if(!value){
+                    callback(new Error('请输入金额'));
+                }
+                else{
+                    callback();
+                }
+            };
             return {
                 staffItems: [],
                 typeItems: [],
@@ -59,11 +67,11 @@
                     income_type: [
                         {required: true, message: '请选择收入类型'}
                     ],
-                    staff_id: [
+                    staff_name: [
                         {required: true, message: '请选择收入人员'}
                     ],
                     income_money: [
-                        {required: true, message: '请输入收入金额', trigger: 'blur'}
+                        {required: true, validator:money,trigger: 'blur',type:'number',}
                     ],
                     income_time: [
                         {required: true, message: '请输入收入时间', trigger: 'blur'}
@@ -77,6 +85,7 @@
             handleSubmit() {
                 this.$refs['formValidate'].validate((valid) => {
                     if (valid) {
+                        console.log(this.formValidate)
                         incomeInsert(this.formValidate).then(res => {
                             if (res !== false) {
                                 this.$router.push({name: 'incomeManage'})
@@ -86,6 +95,13 @@
                 }).catch(err => {
                     this.$Message.error(err);
                 })
+            },
+            checkNumVal(){
+                const reg =(/[^0-9]/g)
+                this.formValidate.income_money = this.formValidate.income_money.toString().replace(reg,'')
+            },
+            changeTime(old){
+                this.formValidate.income_time = old
             }
         },
         created() {
