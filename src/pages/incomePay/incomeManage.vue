@@ -11,10 +11,10 @@
                     <DatePicker type="daterange" placement="bottom-end" placeholder="请选择日期" style="width: 280px"
                                 v-model='formInline.statistics_time'></DatePicker>
                 </FormItem>
-                <FormItem label="收入类型：" prop="staff_id">
-                    <Select v-model="formInline.staff_id">
-                        <Option v-for="(item,index) in incomeTypeItems" :key="index" :value="item.staff_id">
-                            {{item.staff_name}}
+                <FormItem label="收入类型：" prop="income_type">
+                    <Select clearable v-model="formInline.income_type">
+                        <Option  v-for="(item,index) in typeItems" :key="index" :value="item.income_type">
+                            {{item.income_type_name}}
                         </Option>
                     </Select>
                 </FormItem>
@@ -40,6 +40,7 @@
 <script>
     import Tips from '../../components/tips'
     import BaseTable from '../../components/baseTable'
+    import {incomeTypeSelect} from "@/service/api"
     import {incomeDelete} from "@/service/incomePay"
 
 
@@ -51,18 +52,18 @@
         },
         data() {
             return {
-                incomeTypeItems:[],
+                typeItems:[],
                 formInline: {
                     staff_name: '',
                     income_time: ['', ''],
-                    income_type: 0
+                    income_type: ''
                 },
                 table: {
                     mock: false,
                     baseParam: {
                         staff_name: '',
                         income_time: ['', ''],
-                        income_type: 0
+                        income_type: ''
                     },
                     url: 'serviceManage/income_manage/select',
                     columns: [
@@ -182,6 +183,11 @@
                     }
                 });
             },
+        },
+        created() {
+            incomeTypeSelect().then((res) => {
+                this.typeItems = res
+            })
         }
     }
 </script>

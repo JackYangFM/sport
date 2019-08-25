@@ -171,3 +171,14 @@ export async function staffSelect(params,mock) {
     }
   });
 }
+
+//5.5获取额外收入的类型
+export async function incomeTypeSelect(params,mock) {
+  return request('serviceManage/commonality_manage/income_type_select',{
+    mock:mock ? mock : false,
+    body:{
+      method:'GET',
+      data:params
+    }
+  });
+}

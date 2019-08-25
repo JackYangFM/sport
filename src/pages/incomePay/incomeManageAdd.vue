@@ -4,10 +4,10 @@
         <div class="c-form f-single">
             <Form class="base-form" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100"
                   style="width: 550px">
-                <FormItem label="收入类型：" prop="income_id">
-                    <Select v-model="formValidate.income_id">
-                        <Option v-for="(item,index) in staffItems" :key="index" :value="item.income_id">
-                            {{item.income_type}}
+                <FormItem label="收入类型：" prop="income_type">
+                    <Select v-model="formValidate.income_type">
+                        <Option v-for="(item,index) in typeItems" :key="index" :value="item.income_type">
+                            {{item.income_type_name}}
                         </Option>
                     </Select>
                 </FormItem>
@@ -25,7 +25,7 @@
                     <Input v-model="formValidate.income_time" placeholder="请输入收入时间"/>
                 </FormItem>
                 <FormItem label="备注：" prop="remark">
-                    <Input v-model="formValidate.remark" type="textarea"  placeholder="请输入备注信息"/>
+                    <Input v-model="formValidate.remark" type="textarea" placeholder="请输入备注信息"/>
                 </FormItem>
                 <FormItem>
                     <Button type="primary" @click="handleSubmit">提交</Button>
@@ -36,7 +36,7 @@
 </template>
 <script>
     import Tips from '../../components/tips'
-    import {staffSelect} from "@/service/api"
+    import {staffSelect,incomeTypeSelect} from "@/service/api"
     import {incomeInsert} from "@/service/incomePay"
 
     export default {
@@ -47,15 +47,16 @@
         data() {
             return {
                 staffItems: [],
+                typeItems: [],
                 formValidate: {
                     staff_name: '',
                     income_money: '',
-                    income_time:'',
-                    income_type:'',
-                    remark:'',
+                    income_time: '',
+                    income_type: '',
+                    remark: '',
                 },
                 ruleValidate: {
-                    income_id: [
+                    income_type: [
                         {required: true, message: '请选择收入类型'}
                     ],
                     staff_id: [
@@ -89,8 +90,11 @@
         },
         created() {
             //获取员工数据
-            staffSelect({position:0}).then((res) => {
+            staffSelect({position: 0}).then((res) => {
                 this.staffItems = res
+            })
+            incomeTypeSelect().then((res) => {
+                this.typeItems = res
             })
         }
     }
