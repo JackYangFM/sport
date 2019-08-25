@@ -78,8 +78,7 @@
           .then(res => {
             this.campusList = res
             this.campusList.campus_id = this.campusList.campus_id ? this.campusList.campus_id : res[0].campus_id
-            changeCampus({campus_id: this.campusList.campus_id})
-            // updateHirer({campus_id:this.campusList.campus_id})
+            // changeCampus({campus_id: this.campusList.campus_id})
           })
           .catch(err => {
             this.$Message.error(err);
