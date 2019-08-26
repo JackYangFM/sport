@@ -127,17 +127,17 @@
         methods: {
             handleChange(obj){
                 if(obj){
-                    console.log(obj)
+                    // console.log(obj)
 
                 }else{
-                    console.log('xx',obj)
+                    // console.log('xx',obj)
                     this.$set(this.formInline, 'income_type', '')
                 }
 
 
             },
             handleClear(){
-                console.log(111,this.formInline.income_type)
+                // console.log(111,this.formInline.income_type)
                 // this.$set(this.formInline, 'income_type', 0)
             },
             search() {
@@ -145,11 +145,9 @@
                 let startTime1 = this.formInline.income_time[0];
                 let endTime1 = this.formInline.income_time[1];
                 if (startTime1 == '') {
-                    console.log(0)
                     this.formInline.income_time = ['', ''];
                     this.$refs['basetable'].query(this.formInline); //查询
                 } else {
-                    console.log(1)
                     if (startTime1.toString().indexOf('-') == -1) {
                         let startDate1 = startTime1.getDate();
                         let endDate1 = endTime1.getDate();

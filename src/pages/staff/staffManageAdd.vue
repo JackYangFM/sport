@@ -88,7 +88,6 @@
             handleSubmit() {
                 this.$refs['formValidate'].validate((valid) => {
                     if (valid) {
-                        console.log(this.formValidate)
                         staffIManageInsert(this.formValidate).then(res => {
                             if (res !== false) {
                                 this.$router.push({name: 'staffManage'})

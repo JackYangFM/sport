@@ -61,7 +61,7 @@ axios.interceptors.response.use(function (res) {
   });
 }, function (error) {
   const res = error.response;
-  console.log(res);
+  // console.log(res);
   if(res.status === 401){//token失效状态码
     window.parent.postMessage('refresh','*');
   }else{

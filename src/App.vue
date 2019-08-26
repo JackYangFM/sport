@@ -43,11 +43,9 @@
         campusList: [],
         menuFocus: '1',
         currentPosition: ''
-        // menu: []
       }
     },
     computed: {
-
       ...mapState(['menu']),
 
       menuToggle() {
@@ -66,6 +64,7 @@
       changetenement(obj) {
         changeCampus({campus_id: obj})
           .then(res => {
+            return
             // location.reload()
             // this.$Notice.success({title: '更新校区成功!'})
           })
@@ -78,14 +77,15 @@
           .then(res => {
             this.campusList = res
             this.campusList.campus_id = this.campusList.campus_id ? this.campusList.campus_id : res[0].campus_id
-            // changeCampus({campus_id: this.campusList.campus_id})
           })
           .catch(err => {
             this.$Message.error(err);
           })
       },
       handleLink(route, name){
+        console.log(2,route,name);
         sessionStorage.setItem('currentPosition', JSON.stringify(name))
+        sessionStorage.setItem('currentRoute', JSON.stringify(route))
         this.currentPosition = name
         this.$router.push({
           name:route
@@ -102,6 +102,7 @@
     },
     created() {
       this.permission()
+      this.handlePosition()
       this.$store.dispatch('getMenuData') // 刷新的时候实时获取侧边菜单列表
       const menuStatus = JSON.parse(sessionStorage.getItem('menuStatus'))
       if (menuStatus) { // 判空

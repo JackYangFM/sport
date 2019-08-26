@@ -10,8 +10,12 @@
                                 <ul class="pcccl-ul">
                                     <li>
                                         <div class="pcccl-name">开课时间：</div>
-                                        <div class="pcccl-text" v-for="(item,index) in parentDataHhl.rows" :key="index">
-                                            <span>{{item.time_quantum[0]}} - {{item.time_quantum[1]}}</span>
+                                        <div class="pcccl-text">
+                                            <span v-for="(item,index) in parentDataHhl.rows" :key="index">
+                                                <template v-if="item.time_quantum!=''">
+                                                    {{item.time_quantum[0]}} - {{item.time_quantum[1]}}
+                                                </template>
+                                            </span>
                                         </div>
                                     </li>
                                     <li>
@@ -103,15 +107,20 @@
                             title: '开课时间',
                             key: 'time_quantum',
                             align: 'center',
+                            maxWidth:240,
                             render: (h, params) => {
-                                return h('span', {}, params.row.time_quantum[0] + '-' + params.row.time_quantum[1]
-                                );
+                                if(params.row.time_quantum !== ''){
+                                    return h('span', {}, params.row.time_quantum[0] + '-' + params.row.time_quantum[1]);
+                                }else{
+
+                                }
                             }
                         },
                         {
                             title: '学员人数',
                             key: 'student_number',
-                            align: 'center'
+                            align: 'center',
+                            maxWidth:240,
                         }, {
                             title: '学员',
                             key: 'students',
@@ -123,7 +132,7 @@
             }
         },
         created() {
-            courseTimeSelect({'campus_id': 1}).then((res) => {
+            courseTimeSelect({'campus_id': 3}).then((res) => {
                 this.courseTime = res
             })
 
@@ -136,7 +145,8 @@
                 this.$refs['formValidate'].validate((valid) => {
                     if (valid) {
                         studentInsert(Object.assign(this.formValidate, {campus_id: 3})).then(res => {
-                           return
+                            this.$refs['formValidate'].resetFields()
+                            this.$refs['basetable'].query(this.formInline);
                         })
                     }
                 })

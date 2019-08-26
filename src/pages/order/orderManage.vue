@@ -17,15 +17,15 @@
                 </FormItem>
                 <FormItem>
                     <Button type="primary" @click="search">
-                        <Icon type="md-search" />
+                        <Icon type="md-search"/>
                         查询
                     </Button>
                 </FormItem>
             </Form>
         </div>
         <div class="c-operation">
-            <Button type="success" @click="add">
-                <Icon type="md-add" />
+            <Button v-if="showBtn" type="success" @click="add">
+                <Icon type="md-add"/>
                 新增
             </Button>
             <Button type="primary" @click="consume">课时消耗</Button>
@@ -94,6 +94,7 @@
         },
         data() {
             return {
+                showBtn: true,
                 modal1: false,
                 staffItems: [],//教练
                 assistantItems: [],//助教
@@ -129,13 +130,13 @@
                             title: '学员名',
                             key: 'student_name',
                             align: 'center',
-                            minWidth: 170
+                            minWidth: 140
                         },
                         {
                             title: '性别',
                             key: 'gender',
                             align: 'center',
-                            minWidth: 160
+                            minWidth: 120
                         },
                         {
                             title: '年级',
@@ -147,7 +148,7 @@
                             title: '课时（总课时 | 剩余课时）',
                             key: 'course',
                             align: 'center',
-                            minWidth: 120
+                            minWidth: 180
                         },
                         {
                             title: '成单员工',
@@ -159,15 +160,20 @@
                             title: '成交时间',
                             key: 'order_time',
                             align: 'center',
-                            minWidth: 120
+                            minWidth: 180
                         },
                         {
                             title: '操作',
                             key: 'action',
-                            width: 160,
+                            width: 180,
                             align: 'center',
                             render: (h, params) => {
-                                return h('div', [
+                                return h('div', {
+                                    style: {
+                                        display: 'flex',
+                                        justifyContent: 'center'
+                                    }
+                                }, [
                                     h('span', {
                                         props: {
                                             type: 'primary',
@@ -208,7 +214,8 @@
                                         style: {
                                             marginRight: '5px',
                                             color: "#2d8cf0",
-                                            cursor: "pointer"
+                                            cursor: "pointer",
+                                            display: this.showBtn ? 'block' : 'none'
                                         },
                                         on: {
                                             click: () => {
@@ -249,10 +256,8 @@
                         return item.order_id
                     })
                     this.modal1 = true;
-                    // this.detailItems.order_ids = []
                     this.detailItems.order_ids = order_ids
-                    console.log(123, this.detailItems.order_ids)
-                }else{
+                } else {
                     this.$Message.error('请至少选择一项')
                 }
 
@@ -262,7 +267,6 @@
                 this.modal1 = true;
                 this.detailItems.order_ids = []
                 this.detailItems.order_ids.push(params)
-                console.log(this.detailItems.order_ids)
             },
             //详情
             batchDetaile(params) {
@@ -324,7 +328,7 @@
                         let n = parseTime(new Date().getTime(), '{y}年{m}月{d}日')
                         this.detailItems.course_time = n + ' ' + c
                         consumeCourse(this.detailItems).then(res => {
-                            if(res !== false){
+                            if (res !== false) {
                                 this.selection.length = 0
                                 this.$refs['basetable'].query(this.formInline);
                                 return
@@ -339,17 +343,18 @@
         created() {
             courseTimeSelect().then((res) => {
                 this.courseTime = res
-                // this.detailItems.order = this.detailItems.order ? this.detailItems.order : res[0].order;
 
             })
             staffSelect({position: 0}).then((res) => {
                 this.staffItems = res
-                // this.detailItems.one_staff_id = this.detailItems.order ? this.detailItems.order : res[0].order;
 
             })
             staffSelect({position: 2}).then((res) => {
                 this.assistantItems = res
             })
+            if (JSON.parse(localStorage.getItem('menu')).length == 1 && JSON.parse(localStorage.getItem('menu'))[0].menuName == "订单管理") {
+                this.showBtn = false
+            }
         }
     }
 </script>

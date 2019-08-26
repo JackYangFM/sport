@@ -54,8 +54,8 @@
             {required: true, validator: user_name, trigger: 'blur'}
           ],
           password: [
-            {required: true, message: 'Please fill in the password.', trigger: 'blur'},
-            {type: 'string', min: 6, message: 'The password length cannot be less than 6 bits', trigger: 'blur'}
+            {required: true, message: '请输入密码', trigger: 'blur'},
+            {type: 'string', min: 6, message: '密码长度不能小于6位', trigger: 'blur'}
           ]
         },
         checked: false
@@ -85,9 +85,18 @@
               localStorage.setItem('menu', JSON.stringify(res.menu));
               this.$store.dispatch('getMenuData')
               this.$emit('handlePosition');
-              this.$router.push({
-                name: 'orderManage',
-              });
+              console.log(JSON.parse(sessionStorage.getItem('currentRoute')))
+              let r = JSON.parse(sessionStorage.getItem('currentRoute'))
+              if(r){
+                this.$router.push({
+                  name: r,
+                });
+              }else{
+                this.$router.push({
+                  name: 'orderManage',
+                });
+              }
+
             })
           } else {
             this.$Message.error('Fail!');

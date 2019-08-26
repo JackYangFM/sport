@@ -10,7 +10,7 @@
             <TimePicker :value="item.time_quantum"
             format="HH:mm" type="timerange" placement="bottom-end"
             :steps="[1, 30]"
-            placeholder="Select time" style="width: 170px;margin: 0 30px 10px 0;"></TimePicker>
+            placeholder="请选择时间" style="width: 170px;margin: 0 30px 10px 0;"></TimePicker>
           </span>
 
         </FormItem>
