@@ -83,7 +83,6 @@
           })
       },
       handleLink(route, name){
-        console.log(2,route,name);
         sessionStorage.setItem('currentPosition', JSON.stringify(name))
         sessionStorage.setItem('currentRoute', JSON.stringify(route))
         this.currentPosition = name

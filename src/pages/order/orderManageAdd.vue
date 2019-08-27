@@ -131,7 +131,6 @@
             handleSubmit() {
                 this.$refs['formValidate'].validate((valid) => {
                     if (valid) {
-                        console.log(this.formValidate)
                         insert(this.formValidate).then(res => {
                             if (res !== false) {
                                 this.$router.push({name: 'orderManage'})
