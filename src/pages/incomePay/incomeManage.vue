@@ -32,7 +32,7 @@
                 新增
             </Button>
         </div>
-        <BaseTable v-bind="table" ref="basetable"></BaseTable>
+        <BaseTable v-bind="table" ref="basetable" showTotal></BaseTable>
     </div>
 
 </template>

@@ -30,7 +30,7 @@
             </Button>
             <Button type="primary" @click="consume">课时消耗</Button>
         </div>
-        <BaseTable v-bind="table" ref="basetable" @selectionChange="getTableSelection"></BaseTable>
+        <BaseTable v-bind="table" ref="basetable" @selectionChange="getTableSelection" showTotal></BaseTable>
         <Modal
                 v-model="modal1"
                 width="500px"

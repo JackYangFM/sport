@@ -20,12 +20,15 @@
       <div class="l-content" :style="{ left:menuToggle }">
         <router-view/>
       </div>
-      <Select :class="[ campus == true ? 'hide' : 'show' ]" @on-change="changetenement" size="small" placeholder="请选择校区"
-              v-model="campusList.campus_id">
-        <Option v-for="(item,index) in campusList" :key="item.campus_id + index" :value="item.campus_id">
-          {{item.campus_name}}
-        </Option>
-      </Select>
+      <template v-if="this.$route.name == ('staffManage' || 'incomePayManage')">
+        <Select :class="[ campus == true ? 'hide' : 'show' ]" @on-change="changetenement" size="small" placeholder="请选择校区"
+                v-model="campusList.campus_id">
+          <Option v-for="(item,index) in campusList" :key="item.campus_id + index" :value="item.campus_id">
+            {{item.campus_name}}
+          </Option>
+        </Select>
+      </template>
+
     </div>
 
   </div>
@@ -83,6 +86,7 @@
           })
       },
       handleLink(route, name){
+        console.log(this.$route)
         sessionStorage.setItem('currentPosition', JSON.stringify(name))
         sessionStorage.setItem('currentRoute', JSON.stringify(route))
         this.currentPosition = name

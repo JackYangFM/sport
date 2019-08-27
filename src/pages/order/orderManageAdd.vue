@@ -28,7 +28,7 @@
                 <FormItem label="金额：" prop="order_sum">
                     <Input clearable v-model="formValidate.order_sum" placeholder="请输入成交金额" @on-keyup="checkNumVal" number/>
                 </FormItem>
-                <FormItem label="总课时：" prop="totalCourse">
+                <FormItem label="总课时：" prop="total_course">
                     <Input v-model="formValidate.total_course" placeholder="请输入总课时"/>
                 </FormItem>
                 <FormItem label="成交员工：" prop="staff_id">
@@ -38,8 +38,8 @@
                         </Option>
                     </Select>
                 </FormItem>
-                <FormItem label="成交时间：" prop="orderTime">
-                    <Input v-model="formValidate.order_time" placeholder="请输入成交时间"/>
+                <FormItem label="成交时间：" prop="order_time">
+                    <Input v-model="formValidate.order_time" placeholder="请输入成交时间" disabled/>
                 </FormItem>
                 <FormItem label="备注：" prop="remark">
                     <Input v-model="formValidate.remark" type="textarea"  placeholder="请输入备注信息"/>
@@ -55,6 +55,8 @@
     import Tips from '../../components/tips'
     import {staffSelect} from "@/service/api"
     import {insert} from "@/service/order"
+    import {parseTime} from '../../utils/index'
+
 
     export default {
         name: "orderManageAdd",
@@ -92,7 +94,7 @@
                     school:'',
                     order_sum:'',
                     total_course:'',
-                    order_time:'',
+                    order_time:parseTime(new Date().getTime(), '{y}-{m}-{d} {h}:{m}:{s}'),
                     remark:'',
                 },
                 ruleValidate: {
@@ -114,13 +116,13 @@
                     order_sum: [
                         {required: true,validator:money,trigger: 'blur',type:'number',}
                     ],
-                    totalCourse: [
+                    total_course: [
                         {required: true, message: '请输入总课时', trigger: 'blur'}
                     ],
                     staff: [
                         {required: true, message: '请选择成交员工'}
                     ],
-                    orderTime: [
+                    order_time: [
                         {required: true, message: '请输入成交时间', trigger: 'blur'}
                     ]
                 },
@@ -128,6 +130,9 @@
             }
         },
         methods: {
+            parseTime(time, options) {
+                return parseTime(time, options)
+            },
             handleSubmit() {
                 this.$refs['formValidate'].validate((valid) => {
                     if (valid) {

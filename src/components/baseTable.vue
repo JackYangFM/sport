@@ -178,6 +178,7 @@
                         this.loading = false;
                         this.props_data = res.rows;
                         this.props_pageNo = res.page_now;
+                        console.log(222,res.records_total)
                         this.props_total = res.records_total;
                         this.$emit('len',res.rows.length);
                         this.$emit('pages',res.pageNo)
