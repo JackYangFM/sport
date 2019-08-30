@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-view v-if="$route.path === '/login'" @handlePosition="handlePosition"/>
+        <router-view v-if="$route.path === '/login'" @handlePosition="handlePosition"  @permission="permission"/>
         <router-view
                 v-else-if="$route.path === '/parentwy' || $route.path === '/parenttbl' || $route.path === '/parenthhl'"/>
         <div class="l-app" v-else>
@@ -21,7 +21,7 @@
             <div class="l-content" :style="{ left:menuToggle }">
                 <router-view v-if="isRouterAlive"/>
             </div>
-            <Select :class="[ campus == true ? 'hide' : 'show' ]" @permission="permission" @on-change="changetenement"
+            <Select :class="[ campus == true ? 'hide' : 'show' ]" @on-change="changetenement"
                     size="small" placeholder="请选择校区"
                     v-model="campusList.campus_id">
                 <Option v-for="(item,index) in campusList" :key="item.campus_id + index" :value="item.campus_id">
