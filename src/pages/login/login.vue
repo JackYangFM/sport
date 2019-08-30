@@ -85,7 +85,7 @@
               localStorage.setItem('menu', JSON.stringify(res.menu));
               this.$store.dispatch('getMenuData')
               this.$emit('handlePosition');
-              console.log(JSON.parse(sessionStorage.getItem('currentRoute')))
+              this.$emit('permission');
               let r = JSON.parse(sessionStorage.getItem('currentRoute'))
               if(r){
                 this.$router.push({
@@ -96,7 +96,6 @@
                   name: 'orderManage',
                 });
               }
-
             })
           } else {
             this.$Message.error('Fail!');

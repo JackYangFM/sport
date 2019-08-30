@@ -100,7 +100,7 @@ export async function queryPerms(params) {
   });
 }
 
-//5.1获取校区数据
+//5.1获取校区数据  作废
 export async function campusSelect(params, mock) {
   return request('serviceManage/commonality_manage/campus_select', {
     mock: mock ? mock : false,
@@ -126,6 +126,7 @@ export async function userCampus(params, mock) {
   return request('serviceManage/user_manage/user_campus', {
     mock: mock ? mock : false,
     body: {
+      method: 'GET',
       data: params
     }
   });
