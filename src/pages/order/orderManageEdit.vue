@@ -39,7 +39,7 @@
                     </Select>
                 </FormItem>
                 <FormItem label="成交时间：" prop="order_time">
-                    <Input v-model="formValidate.order_time" placeholder="请输入成交时间"/>
+                    <Input v-model="formValidate.order_time" placeholder="请输入成交时间" disabled/>
                 </FormItem>
                 <FormItem label="备注：" prop="remark">
                     <Input v-model="formValidate.remark" type="textarea"  placeholder="请输入备注信息"/>
@@ -130,6 +130,19 @@
         },
         methods: {
             handleSubmit() {
+                let startTime1 = this.formValidate.birth
+                if (startTime1.toString().indexOf('-') == -1) {
+                    let startDate1 = startTime1.getDate();
+                    if (startDate1 < 10) {
+                        startDate1 = '0' + startDate1;
+                    }
+                    let startMounth1 = startTime1.getMonth() + 1;
+                    if (startMounth1 < 10) {
+                        startMounth1 = '0' + startMounth1
+                    }
+                    let startTime2 = startTime1.getFullYear() + '年' + startMounth1 + '月' + startDate1 + '日';
+                    this.formValidate.birth = startTime2
+                }
                 this.$refs['formValidate'].validate((valid) => {
                     if (valid) {
                         update(this.formValidate).then(res => {

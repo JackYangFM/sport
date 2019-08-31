@@ -14,7 +14,8 @@
                     </RadioGroup>
                 </FormItem>
                 <FormItem label="出生日期：" prop="birth">
-                    <DatePicker v-model="formValidate.birth" format="yyyy年MM月dd日" type="date" placeholder="请输入员工出生日期" @on-change="changeTime" style="width: 450px;"></DatePicker>
+                    <DatePicker v-model="formValidate.birth" format="yyyy年MM月dd日" type="date" placeholder="请输入员工出生日期"
+                                @on-change="changeTime" style="width: 450px;"></DatePicker>
                 </FormItem>
                 <FormItem label="联系电话：" prop="phone">
                     <Input v-model="formValidate.phone" placeholder="请输入员工联系电话"/>
@@ -45,11 +46,10 @@
         },
         data() {
             const phone = (rule, value, callback) => {
-                let myreg=/^((0\d{2,3}-\d{7,8})|(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8})$/;
-                if(!value){
+                let myreg = /^((0\d{2,3}-\d{7,8})|(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8})$/;
+                if (!value) {
                     callback(new Error('请输入手机号'));
-                }
-                else if (!myreg.test(value)&&value!=='') {
+                } else if (!myreg.test(value) && value !== '') {
                     callback(new Error('请输入正确的手机号'));
                 } else {
                     callback();
@@ -72,10 +72,10 @@
                         {required: true, message: '请选择性别', trigger: 'blur'}
                     ],
                     birth: [
-                        {required: true, message: '请输入员工出生日期', trigger: 'blur'}
+                        {required: true, message: '请输入员工出生日期'}
                     ],
                     phone: [
-                        { required: true,validator:phone,type:'RegExp' },
+                        {required: true, validator: phone, type: 'RegExp'},
                     ],
                     position: [
                         {required: true, message: '请选择职位'}
@@ -86,6 +86,19 @@
         },
         methods: {
             handleSubmit() {
+                let startTime1 = this.formValidate.birth
+                if (startTime1.toString().indexOf('-') == -1) {
+                    let startDate1 = startTime1.getDate();
+                    if (startDate1 < 10) {
+                        startDate1 = '0' + startDate1;
+                    }
+                    let startMounth1 = startTime1.getMonth() + 1;
+                    if (startMounth1 < 10) {
+                        startMounth1 = '0' + startMounth1
+                    }
+                    let startTime2 = startTime1.getFullYear() + '年' + startMounth1 + '月' + startDate1 + '日';
+                    this.formValidate.birth = startTime2
+                }
                 this.$refs['formValidate'].validate((valid) => {
                     if (valid) {
                         staffIManageUpdate(this.formValidate).then(res => {
@@ -98,7 +111,8 @@
                     this.$Message.error(err);
                 })
             },
-            changeTime(old){
+            changeTime(old) {
+                console.log(old)
                 this.formValidate.birth = old
             }
         },
@@ -111,7 +125,11 @@
             const staff_id = this.$route.params.staff_id
             staffIManageUpdateInit({staff_id: staff_id})
                 .then(res => {
+                    console.log(2, res)
                     this.formValidate = res
+                    this.formValidate.birth = res.birth
+                    console.log(3, this.formValidate)
+
                 })
                 .catch(err => {
                     this.$Message.error(err);

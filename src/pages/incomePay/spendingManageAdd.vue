@@ -98,7 +98,7 @@
         },
         created() {
             //获取员工数据
-            staffSelect({position: 0}).then((res) => {
+            staffSelect({position:''}).then((res) => {
                 this.staffItems = res
             })
         }
