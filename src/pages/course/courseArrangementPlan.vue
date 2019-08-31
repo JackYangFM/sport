@@ -9,6 +9,7 @@
                     {{item.order}}：
                     <TimePicker :value="item.time_quantum"
                                 @on-change="handleChange(index,$event)"
+                                @on-clear="handleClear(index)"
                                 format="HH:mm" type="timerange" placement="bottom-end"
                                 :steps="[1, 30]"
                                 placeholder="请选择时间" style="width: 170px;margin: 0 30px 10px 0;"></TimePicker>
@@ -54,12 +55,7 @@
                     other_content: "",
                     site: "",
                     sports_equipment: "",
-                    make_an_appointment: [
-                        {
-                            order:'',
-                            time_quantum:''
-                        }
-                    ],
+                    make_an_appointment: [],
                 },
                 ruleValidate: {
                     // make_an_appointment:[
@@ -79,6 +75,9 @@
             }
         },
         methods: {
+            handleClear(index){
+                this.formValidate.make_an_appointment[index].time_quantum = []
+            },
             handleChange (index,event) {
                 this.formValidate.make_an_appointment[index].time_quantum = event
             },
