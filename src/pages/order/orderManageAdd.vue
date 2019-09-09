@@ -13,18 +13,6 @@
                         <Radio label="1">女</Radio>
                     </RadioGroup>
                 </FormItem>
-                <FormItem label="出生日期：" prop="birth">
-                    <DatePicker v-model="formValidate.birth" format="yyyy年MM月dd日" type="date" placeholder="请输入学员出生日期" @on-change="changeTime" style="width: 450px;"></DatePicker>
-                </FormItem>
-                <FormItem label="联系电话：" prop="phone">
-                    <Input v-model="formValidate.phone" placeholder="请输入学员联系电话"/>
-                </FormItem>
-                <FormItem label="年级：" prop="grade">
-                    <Input v-model="formValidate.grade" placeholder="请输入学员年级"/>
-                </FormItem>
-                <FormItem label="所属学校：" prop="school">
-                    <Input v-model="formValidate.school" placeholder="请输入学员所属学校"/>
-                </FormItem>
                 <FormItem label="金额：" prop="order_sum">
                     <Input clearable v-model="formValidate.order_sum" placeholder="请输入成交金额" @on-keyup="checkNumVal" number/>
                 </FormItem>
@@ -37,6 +25,18 @@
                             {{item.staff_name}}
                         </Option>
                     </Select>
+                </FormItem>
+               <!-- <FormItem label="出生日期：" prop="birth">
+                    <DatePicker v-model="formValidate.birth" format="yyyy年MM月dd日" type="date" placeholder="请输入学员出生日期" @on-change="changeTime" style="width: 450px;"></DatePicker>
+                </FormItem>-->
+                <FormItem label="联系电话：" prop="phone">
+                    <Input v-model="formValidate.phone" placeholder="请输入学员联系电话"/>
+                </FormItem>
+                <FormItem label="年级：" prop="grade">
+                    <Input v-model="formValidate.grade" placeholder="请输入学员年级"/>
+                </FormItem>
+                <FormItem label="所属学校：" prop="school">
+                    <Input v-model="formValidate.school" placeholder="请输入学员所属学校"/>
                 </FormItem>
                 <FormItem label="成交时间：" prop="order_time">
                     <Input v-model="formValidate.order_time" placeholder="请输入成交时间" disabled/>
@@ -88,7 +88,7 @@
                 formValidate: {
                     student_name: '',
                     gender: '0',
-                    birth: '',
+                    // birth: '',
                     phone: '',
                     grade:'',
                     school:'',
@@ -104,22 +104,22 @@
                     gender: [
                         {required: true, message: '请选择性别', trigger: 'blur'}
                     ],
-                    birth: [
+                    /*birth: [
                         {required: true, message: '请输入学员出生日期', trigger: 'blur'}
-                    ],
-                    phone: [
-                        { required: true,validator:phone,type:'RegExp' },
-                    ],
-                    grade: [
-                        {required: true, message: '请输入学员年级', trigger: 'blur'}
-                    ],
+                    ],*/
+                    // phone: [
+                    //     { required: false,validator:phone,type:'RegExp' },
+                    // ],
+                    // grade: [
+                    //     {required: false, message: '请输入学员年级', trigger: 'blur'}
+                    // ],
                     order_sum: [
                         {required: true,validator:money,trigger: 'blur',type:'number',}
                     ],
                     total_course: [
                         {required: true, message: '请输入总课时', trigger: 'blur'}
                     ],
-                    staff: [
+                    staff_id: [
                         {required: true, message: '请选择成交员工'}
                     ],
                     order_time: [
@@ -146,9 +146,9 @@
                     this.$Message.error(err);
                 })
             },
-            changeTime(old){
+           /* changeTime(old){
                 this.formValidate.birth = old
-            },
+            },*/
             checkNumVal(){
                 const reg =(/[^0-9]/g)
                 this.formValidate.order_sum = this.formValidate.order_sum.toString().replace(reg,'')

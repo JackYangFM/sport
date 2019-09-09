@@ -6,25 +6,26 @@
             <Button type="primary" @click="parentChoose">家长选课</Button>
         </div>
         <div class="c-query">
-            <h3 style="margin: 10px 15px;">{{parseTime(new Date().getTime(), '{y}年{m}月{d}日')}}课程信息：</h3>
+<!--            <h3 style="margin: 10px 15px;">{{parseTime(new Date().getTime(), '{y}年{m}月{d}日')}}课程信息：</h3>-->
+            <h3 style="margin: 10px 15px;">{{formInline.course_time}}课程信息：</h3>
             <Form ref="query" :model="formInline" inline label-position="right" :label-width="150">
-                <FormItem label="开课时间：" prop="course_content">
+                <FormItem label="开课时间：" prop="time_quantum">
                     <p v-for="(item,index) in formInline.rows" :key="index">
                         <template v-if="item.time_quantum!=''">
                             {{item.time_quantum[0]}} - {{item.time_quantum[1]}}
                         </template>
                     </p>
                 </FormItem>
-                <FormItem label="所需器材：" prop="course_time">
+                <FormItem label="所需器材：" prop="sports_equipment">
                     <p>{{formInline.sports_equipment}} </p>
                 </FormItem>
-                <FormItem label="上课内容：" prop="other_content">
+                <FormItem label="上课内容：" prop="course_content">
                     <p>{{formInline.course_content}} </p>
                 </FormItem>
                 <FormItem label="集合地点：" prop="site">
                     <p>{{formInline.site}} </p>
                 </FormItem>
-                <FormItem label="其它：" prop="sports_equipment">
+                <FormItem label="其它：" prop="other_content">
                     <p> {{formInline.other_content}} </p>
                 </FormItem>
             </Form>

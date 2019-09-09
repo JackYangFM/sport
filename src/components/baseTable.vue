@@ -136,7 +136,7 @@
                 props_total:0,
                 props_pageNo:this.pageNo,
                 props_query:{
-                    page_now: this.pageNo,
+                    pageNo: this.pageNo,
                     page_size: this.pageSize,
                 }
             }
@@ -177,8 +177,7 @@
                     queryApi(this.url,param,this.mock).then((res) => {
                         this.loading = false;
                         this.props_data = res.rows;
-                        this.props_pageNo = res.page_now;
-                        console.log(222,res.records_total)
+                        this.props_pageNo = res.pageNo;
                         this.props_total = res.records_total;
                         this.$emit('len',res.rows.length);
                         this.$emit('pages',res.pageNo)

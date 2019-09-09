@@ -144,6 +144,15 @@ export async function changeCampus(params, mock) {
 
 //5.4获取课程时间
 export async function courseTimeSelect(params, mock) {
+  //serviceManage/commonality_manage/course_time_select
+  return request('serviceManage/commonality_manage/each_course_time', {
+    mock: mock ? mock : false,
+    body: {
+      data: params
+    }
+  });
+}
+export async function courseTimeSelect2(params, mock) {
   return request('serviceManage/commonality_manage/course_time_select', {
     mock: mock ? mock : false,
     body: {
@@ -151,7 +160,6 @@ export async function courseTimeSelect(params, mock) {
     }
   });
 }
-
 //5.2获取职员职位数据
 export async function positionSelect(params,mock) {
   return request('serviceManage/commonality_manage/position_select',{

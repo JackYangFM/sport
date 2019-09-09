@@ -78,7 +78,7 @@
 <script>
     import Tips from '../../components/tips'
     import BaseTable from '../../components/baseTable'
-    import {courseTimeSelect, staffSelect} from "@/service/api"
+    import {courseTimeSelect2, staffSelect} from "@/service/api"
     import {consumeCourse} from "@/service/order"
 
 
@@ -145,7 +145,7 @@
                             minWidth: 120
                         },
                         {
-                            title: '课时（总课时 | 剩余课时）',
+                            title: '课时（总课时 | 消耗课时）',
                             key: 'course',
                             align: 'center',
                             minWidth: 180
@@ -341,7 +341,7 @@
             }
         },
         created() {
-            courseTimeSelect().then((res) => {
+            courseTimeSelect2().then((res) => {
                 this.courseTime = res
 
             })

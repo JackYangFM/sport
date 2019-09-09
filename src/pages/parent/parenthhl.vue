@@ -132,7 +132,7 @@
             }
         },
         created() {
-            courseTimeSelect({'campus_id': 3}).then((res) => {
+            courseTimeSelect({'campus_id': 2}).then((res) => {
                 this.courseTime = res
             })
 

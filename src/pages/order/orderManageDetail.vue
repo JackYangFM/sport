@@ -16,18 +16,18 @@
                 <FormItem label="总课时：" prop="total_course">
                     <p>{{formValidate.total_course}}</p>
                 </FormItem>
-                <FormItem label="年龄：" prop="birth">
+                <!--<FormItem label="年龄：" prop="birth">
                     <p>{{formValidate.birth}}</p>
-                </FormItem>
+                </FormItem>-->
                 <FormItem label="消耗课时：" prop="consume_course">
                     <p>{{formValidate.consume_course}}</p>
                 </FormItem>
                 <FormItem label="联系电话：" prop="phone">
                     <p>{{formValidate.phone}}</p>
                 </FormItem>
-                <FormItem label="剩余课时：" prop="surplus">
-                    <p>{{formValidate.surplus}}</p>
-                </FormItem>
+<!--                <FormItem label="剩余课时：" prop="surplus">-->
+<!--                    <p>{{formValidate.surplus}}</p>-->
+<!--                </FormItem>-->
                 <FormItem label="年级：" prop="grade">
                     <p>{{formValidate.grade}}</p>
                 </FormItem>
@@ -73,7 +73,7 @@
                 positionItems: [],
                 formValidate: {
                     gender: '',
-                    birth: '',
+                    // birth: '',
                     phone: '',
                     grade: '',//年级
                     school:'',//学校
@@ -81,7 +81,7 @@
                     order_sum:'',//成交金额
                     total_course:'',//总课时
                     consume_course:'',//消耗课时
-                    surplus:'',//剩余课时
+                    // surplus:'',//剩余课时
                     order_time:'',//成交时间
                     remark:'',
                     staff_name:'',//成交员工
