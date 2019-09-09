@@ -107,9 +107,16 @@
                     /*birth: [
                         {required: true, message: '请输入学员出生日期', trigger: 'blur'}
                     ],*/
-                    // phone: [
-                    //     { required: true,validator:phone,type:'RegExp' },
-                    // ],
+                    phone: [
+                        {type:'number',message:'请输入正确的手机号',trigger:'blur',transform(value){
+                                let myreg=/^((0\d{2,3}-\d{7,8})|(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8})$/;
+                                if (!myreg.test(value)&&value!=='') {
+                                    return false
+                                } else {
+                                    return Number(value)
+                                }
+                            } },
+                    ],
                     // grade: [
                     //     {required: true, message: '请输入学员年级', trigger: 'blur'}
                     // ],

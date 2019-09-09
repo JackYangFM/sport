@@ -107,9 +107,16 @@
                     /*birth: [
                         {required: true, message: '请输入学员出生日期', trigger: 'blur'}
                     ],*/
-                    // phone: [
-                    //     { required: false,validator:phone,type:'RegExp' },
-                    // ],
+                    phone: [
+                        {type:'number',message:'请输入正确的手机号',trigger:'blur',transform(value){
+                                let myreg=/^((0\d{2,3}-\d{7,8})|(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8})$/;
+                                if (!myreg.test(value)&&value!=='') {
+                                    return false
+                                } else {
+                                    return Number(value)
+                                }
+                            } },
+                    ],
                     // grade: [
                     //     {required: false, message: '请输入学员年级', trigger: 'blur'}
                     // ],
@@ -122,9 +129,9 @@
                     staff_id: [
                         {required: true, message: '请选择成交员工'}
                     ],
-                    order_time: [
-                        {required: true, message: '请输入成交时间', trigger: 'blur'}
-                    ]
+                    // order_time: [
+                    //     {required: true, message: '请输入成交时间', trigger: 'blur'}
+                    // ]
                 },
 
             }
@@ -152,7 +159,7 @@
             checkNumVal(){
                 const reg =(/[^0-9]/g)
                 this.formValidate.order_sum = this.formValidate.order_sum.toString().replace(reg,'')
-            },
+            }
         },
         created() {
             //获取成交员工数据
