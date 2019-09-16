@@ -81,7 +81,7 @@
                             minWidth: 160
                         },
                         {
-                            title: '支出原因',
+                            title: '备注',
                             key: 'remark',
                             align: 'center',
                             minWidth: 140
